@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex">
   <title>Панель управления сайтом</title>
+  <!-- Отключаем автоматический поиск config.yml, чтобы избежать ошибок URL -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
 </head>
 <body>
-  <script>
-    // Отключаем поиск внешнего файла конфигурации
-    window.CMS_MANUAL_INIT = true;
-  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
   <script>
-    // Внедряем настройки напрямую, чтобы избежать любых ошибок загрузки
     CMS.init({
       config: {
         backend: {
@@ -27,42 +25,39 @@
         publish_mode: 'simple',
         collections: [
           {
-            name: 'pages',
-            label: 'Управление сайтом',
+            name: 'content',
+            label: 'Управление контентом',
             files: [
               {
-                label: 'Главная страница (Все тексты)',
+                label: 'Главная страница',
                 name: 'home',
                 file: 'content.json',
-                description: 'Здесь вы можете менять любые тексты, услуги и портфолио на сайте',
                 fields: [
-                  { label: 'SEO: Заголовок сайта (вкладка браузера)', name: 'meta_title', widget: 'string' },
-                  { label: 'SEO: Описание сайта (для поисковиков)', name: 'meta_description', widget: 'text' },
-                  { label: 'Главный заголовок (Hero)', name: 'hero_title', widget: 'string' },
-                  { label: 'Подзаголовок Hero', name: 'hero_subtitle', widget: 'text' },
+                  {label: 'SEO: Заголовок', name: 'meta_title', widget: 'string'},
+                  {label: 'SEO: Описание', name: 'meta_description', widget: 'text'},
+                  {label: 'Главный заголовок', name: 'hero_title', widget: 'string'},
+                  {label: 'Подзаголовок', name: 'hero_subtitle', widget: 'text'},
                   {
-                    label: 'Услуги и форматы',
+                    label: 'Услуги',
                     name: 'services',
                     widget: 'list',
                     fields: [
-                      { label: 'Иконка (эмодзи или ссылка)', name: 'icon', widget: 'string' },
-                      { label: 'Название услуги', name: 'title', widget: 'string' },
-                      { label: 'Описание', name: 'description', widget: 'text' }
+                      {label: 'Иконка', name: 'icon', widget: 'string'},
+                      {label: 'Название', name: 'title', widget: 'string'},
+                      {label: 'Описание', name: 'description', widget: 'text'}
                     ]
                   },
                   {
-                    label: 'Портфолио (Работы)',
+                    label: 'Портфолио',
                     name: 'portfolio',
                     widget: 'list',
                     fields: [
-                      { label: 'Название проекта', name: 'title', widget: 'string' },
-                      { label: 'Описание', name: 'description', widget: 'text' },
-                      { label: 'Ссылка на видео', name: 'video_url', widget: 'string' },
-                      { label: 'Обложка (превью)', name: 'thumbnail', widget: 'image' }
+                      {label: 'Название', name: 'title', widget: 'string'},
+                      {label: 'Описание', name: 'description', widget: 'text'},
+                      {label: 'Ссылка на видео', name: 'video_url', widget: 'string'},
+                      {label: 'Обложка', name: 'thumbnail', widget: 'image'}
                     ]
-                  },
-                  { label: 'SEO Блок: Заголовок', name: 'seo_title', widget: 'string' },
-                  { label: 'SEO Блок: Текст статьи', name: 'seo_text', widget: 'text' }
+                  }
                 ]
               }
             ]
