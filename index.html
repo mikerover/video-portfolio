@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="doc-title">Загрузка...</title>
-    <meta id="doc-desc" name="description" content="Видеопродакшн и моушн-дизайн">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,7 +127,6 @@
         
         .portfolio-content { padding: 1.5rem; }
         
-        .seo-text p { color: var(--text-muted); font-size: 0.95rem; text-align: center; max-width: 800px; margin: 0 auto; }
         footer { border-top: 1px solid var(--border-color); padding: 3rem 2rem; text-align: center; color: var(--text-muted); }
 
         .modal-overlay {
@@ -154,7 +152,7 @@
         
         .modal-content.brief-content { width: 650px; text-align: left; }
         
-        /* КИНОТЕАТРАЛЬНЫЙ ПЛЕЕР (ОБНОВЛЕННЫЙ) */
+        /* КИНОТЕАТРАЛЬНЫЙ ПЛЕЕР (УНИВЕРСАЛЬНЫЙ АДАПТИВНЫЙ) */
         .modal-content.video-content { 
             padding: 0; 
             background: transparent; 
@@ -164,39 +162,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Горизонтальные видео */
-        .modal-overlay.is-horizontal .modal-content.video-content {
-            width: 1000px;
-            max-width: 100%;
-            aspect-ratio: 16 / 9;
-            height: auto;
-        }
-
-        /* Вертикальные видео */
-        .modal-overlay.is-vertical .modal-content.video-content {
-            height: 80vh;
-            width: auto;
-            aspect-ratio: 9 / 16;
-            max-width: 100%;
+            width: 100vw;
+            height: 85vh;
+            max-width: 1200px;
         }
 
         .video-container {
-            width: 100%; height: 100%;
-            border-radius: 12px;
-            overflow: hidden;
+            width: 100%; 
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
+        
         .video-container iframe, .video-container video {
-            width: 100%; height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%; 
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             border: none;
-            background: #000;
-            object-fit: contain;
+            background: transparent;
+            object-fit: contain; /* Умное заполнение без черных полей */
         }
+
         .video-close {
-            position: absolute; top: -40px; right: 0; background: none; border: none;
+            position: absolute; top: -45px; right: 10px; background: none; border: none;
             color: #fff; font-size: 2.5rem; cursor: pointer; transition: color 0.3s;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5); z-index: 10;
         }
@@ -275,20 +268,15 @@
             
             .service-card { text-align: center; padding: 1.5rem; }
             .portfolio-content { text-align: left; }
-            .seo-text p { text-align: justify; }
             
             .modal-content { padding: 2rem 1.2rem; width: 95%; max-height: 90vh; }
             .modal-content.brief-content { text-align: left; padding: 1.5rem 1rem; }
             .checkbox-group { grid-template-columns: 1fr; gap: 12px; }
             
-            /* Кинотеатральный плеер: Идеальная высота для мобильных */
-            .modal-overlay.is-horizontal .modal-content.video-content {
-                width: 100%;
-                height: auto;
-            }
-            .modal-overlay.is-vertical .modal-content.video-content {
-                height: 75vh; /* Безопасная высота (чтобы не перекрывалось меню браузера) */
-                width: auto;
+            /* Универсальный мобильный плеер */
+            .modal-content.video-content {
+                height: 85vh; 
+                width: 95vw;
             }
             .video-close { top: -45px; right: 0; font-size: 2.5rem; padding: 5px 15px; } 
             
@@ -324,11 +312,6 @@
         <section id="portfolio">
             <h2>Мои работы</h2>
             <div class="portfolio-grid" id="dyn-portfolio"></div>
-        </section>
-
-        <section class="seo-text">
-            <h2 id="dyn-seo-title" style="font-size: 1.8rem; margin-bottom: 1rem;">Загрузка...</h2>
-            <p id="dyn-seo-text">Загрузка...</p>
         </section>
     </main>
 
@@ -452,12 +435,9 @@
             const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerHTML = text; };
 
             setText('doc-title', data.meta_title || 'Портфолио');
-            if(document.getElementById('doc-desc')) document.getElementById('doc-desc').setAttribute('content', data.meta_description || '');
 
             setText('dyn-hero-title', data.hero_title || 'Добро пожаловать');
             setText('dyn-hero-subtitle', data.hero_subtitle || '');
-            setText('dyn-seo-title', data.seo_title || '');
-            setText('dyn-seo-text', data.seo_text || '');
 
             const servicesContainer = document.getElementById('dyn-services');
             servicesContainer.innerHTML = '';
@@ -494,15 +474,6 @@
         }
     }
 
-    function getEmbedUrl(url) {
-        if (!url) return '';
-        let ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-        if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1`;
-        let vimeoMatch = url.match(/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/);
-        if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[3]}?autoplay=1`;
-        return url; 
-    }
-
     function setupVideoModal() {
         const modal = document.getElementById('video-modal');
         if (!modal) return; 
@@ -516,23 +487,16 @@
             
             e.preventDefault(); 
             const rawUrl = item.dataset.video;
-            const orientation = item.dataset.orientation || 'horizontal';
-            
             if (!rawUrl || rawUrl === '#') return;
-
-            // УМНАЯ НАСТРОЙКА РАЗМЕРА ПЛЕЕРА В ЗАВИСИМОСТИ ОТ ВИДЕО
-            modal.classList.remove('is-vertical', 'is-horizontal');
-            modal.classList.add('is-' + orientation);
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
                 container.innerHTML = `
-                    <video controls autoplay muted playsinline style="width: 100%; height: 100%; border-radius: 12px; outline: none; background: #000; object-fit: contain;">
+                    <video controls autoplay playsinline style="width: 100%; height: 100%; border-radius: 12px; outline: none; background: transparent; object-fit: contain;">
                         <source src="${rawUrl}" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>`;
             } else {
-                const embedUrl = getEmbedUrl(rawUrl);
-                container.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px;"></iframe>`;
+                container.innerHTML = `<iframe src="${rawUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px; object-fit: contain;"></iframe>`;
             }
             modal.classList.add('active');
         });
@@ -636,3 +600,9 @@
 </script>
 </body>
 </html>
+```
+
+**Критически важный шаг:**
+Когда вы сохраните этот код на GitHub, **обязательно очистите кэш на вашем телефоне** (в Safari или Chrome), иначе браузер снова загрузит вам старый ломаный плеер из памяти телефона! 
+
+Вам нужно зайти на сайт с телефона и жестко обновить страницу (обычно помогает закрыть вкладку полностью и открыть заново по ссылке, либо почистить историю браузера за последний час). После этого плеер станет идеальным!
