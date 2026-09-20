@@ -1,26 +1,172 @@
 {
 "meta_title": "Заказать видео | Рекламные ролики и моушн-дизайн",
-"meta_description": "Ищете, где заказать видео? Создаем рекламные ролики, видео, презентации и контент для маркетплейсов.",
+"meta_description": "Ищете, где заказать видео? Я создаю рекламные ролики, видео, презентации и контент для маркетплейсов.",
 "hero_title": "Профессиональный продакшн: заказать видео и ИИ ролики",
-"hero_subtitle": "Ищете, где заказать видео для бизнеса? Мы создаем потрясающие видео, коммерческую анимацию и контент, который увеличивает продажи.",
+"hero_subtitle": "Ищете, где заказать видео для бизнеса? Я создаю потрясающие видео, коммерческую анимацию и контент, который увеличивает продажи.",
 "services": [
 {
 "icon": "🎬",
 "title": "Реклама и Промо",
-"description": "Нужно заказать видео рекламу? Мы знаем, как привлечь внимание. Вы можете заказать рекламный ролик любой сложности."
+"description": "Нужно заказать видео рекламу? Я знаю, как привлечь внимание. Вы можете заказать рекламный ролик любой сложности, от короткого Reels до сюжетного ролика."
 },
 {
 "icon": "📦",
 "title": "Для Маркетплейсов и Соцсетей",
-"description": "Селлерам изготовим видео товара с инфографикой. Спрашиваете про видео Озон — как заказывать и какие требования? Мы берем всё на себя."
+"description": "Селлерам изготовлю видео товара с инфографикой. Спрашиваете про видео Озон и WB — как заказать? Я беру всю работу на себя: от идеи до готового файла."
 },
 {
 "icon": "📊",
 "title": "Презентации и Обзоры",
-"description": "У нас можно заказать слайд-шоу, презентации проекта, нового товара или бизнеса в формате PPTX или в видеоформате MP4."
+"description": "У меня можно заказать слайд-шоу, презентации проекта, нового товара или бизнеса в формате MP4 с профессиональной озвучкой."
 }
 ],
-"portfolio": [],
-"seo_title": "Где заказать ролики под ключ?",
-"seo_text": "Если вы думаете, где заказать ролики, наш продакшн предлагает полный цикл производства."
+"portfolio": [
+{
+"title": "Промо для магазина модной женской одежды",
+"description": "Имиджевое видео для магазина модной одежды.",
+"video_url": "butik.mp4",
+"thumbnail": "img/butik.png",
+"orientation": "vertical"
+},
+{
+"title": "Обзор коллекции",
+"description": "Презентация новой коллекции одежды.",
+"video_url": "butik2.mp4",
+"thumbnail": "img/butik2.png",
+"orientation": "vertical"
+},
+{
+"title": "Промо для магазина модной женской одежды",
+"description": "Стильный Reels для соцсетей магазина.",
+"video_url": "butik3.mp4",
+"thumbnail": "img/butik3.png",
+"orientation": "vertical"
+},
+{
+"title": "Детали образа",
+"description": "Фокус на деталях и качестве материалов.",
+"video_url": "butik4.mp4",
+"thumbnail": "img/butik4.png",
+"orientation": "vertical"
+},
+{
+"title": "Haval Dargo",
+"description": "Презентация модели для автосалона.",
+"video_url": "havaldargo.mp4",
+"thumbnail": "img/havaldargo.png",
+"orientation": "horizontal"
+},
+{
+"title": "Видео для бутика стильных ювелирных украшений",
+"description": "Макросъемка и презентация украшений.",
+"video_url": "jewerly.mp4",
+"thumbnail": "img/jewerly.png",
+"orientation": "vertical"
+},
+{
+"title": "Проморолик для бутика стильных ювелирных украшений",
+"description": "Видео для летнего промо.",
+"video_url": "jewerly2.mp4",
+"thumbnail": "img/jewerly2.png",
+"orientation": "vertical"
+},
+{
+"title": "Блеск украшений",
+"description": "Анимация и свет в ювелирных украшениях.",
+"video_url": "jewerly3.mp4",
+"thumbnail": "img/jewerly3.png",
+"orientation": "vertical"
+},
+{
+"title": "Новая коллекция",
+"description": "Проморолик для новых украшений.",
+"video_url": "jewerly5.mp4",
+"thumbnail": "img/jewerly5.png",
+"orientation": "vertical"
+},
+{
+"title": "Презентация пекарни — 10 лет",
+"description": "Презентация пекарни в формате PPTX.",
+"video_url": "krendel.mp4",
+"thumbnail": "img/krendel.png",
+"orientation": "horizontal"
+},
+{
+"title": "Рекламный ролик кроссовок",
+"description": "Стильный и динамичный ролик для рекламы обуви.",
+"video_url": "krossovki.mp4",
+"thumbnail": "img/krossovki.png",
+"orientation": "vertical"
+},
+{
+"title": "Кроссовки (Версия 2)",
+"description": "Видеоролик для бутика спортивной обуви.",
+"video_url": "krossovri2.mp4",
+"thumbnail": "img/krossovri2.png",
+"orientation": "vertical"
+},
+{
+"title": "Логистика",
+"description": "Акционное видео для транспортной компании.",
+"video_url": "logistics.mp4",
+"thumbnail": "img/logistics.png",
+"orientation": "vertical"
+},
+{
+"title": "Power bank",
+"description": "Видеообложка для маркетплейса WB.",
+"video_url": "powerbank.mp4",
+"thumbnail": "img/powerbank.png",
+"orientation": "horizontal"
+},
+{
+"title": "Smart Watch",
+"description": "Промовидео умных часов для интернет-магазина.",
+"video_url": "smartwatch.mp4",
+"thumbnail": "img/smartwatch.png",
+"orientation": "vertical"
+},
+{
+"title": "Видеомаркетинг",
+"description": "Презентация услуг для B2B сегмента.",
+"video_url": "videomarketing.mp4",
+"thumbnail": "img/videomarketing.png",
+"orientation": "horizontal"
+},
+{
+"title": "Проморолик рекламных услуг",
+"description": "Видеоролик, презентующий преимущества видеомаркетинга.",
+"video_url": "videomarketing2.mp4",
+"thumbnail": "img/videomarketing2.png",
+"orientation": "vertical"
+},
+{
+"title": "Выкуп авто",
+"description": "Рекламный ролик для компании, выкупающей автомобили.",
+"video_url": "vikupavto.mp4",
+"thumbnail": "img/vikupavto.png",
+"orientation": "vertical"
+},
+{
+"title": "Карточка WB",
+"description": "Видеокарточка.",
+"video_url": "wbkartochka.mp4",
+"thumbnail": "img/wbkartochka.png",
+"orientation": "vertical"
+},
+{
+"title": "Карточка WB",
+"description": "«Живая» карточка товара.",
+"video_url": "wbkartochka2.mp4",
+"thumbnail": "img/wbkartochka2.png",
+"orientation": "vertical"
+},
+{
+"title": "Вендинг Парфюм",
+"description": "Проморолик: презентация автоматов с парфюмерией.",
+"video_url": "wendingparfum.mp4",
+"thumbnail": "img/wendingparfum.png",
+"orientation": "vertical"
+}
+]
 }

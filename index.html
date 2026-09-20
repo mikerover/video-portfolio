@@ -51,6 +51,17 @@
             align-items: center;
         }
 
+        .logo-glow {
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+            transition: filter 0.3s ease;
+        }
+        
+        .logo-glow:hover {
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.7));
+        }
+
         main { padding-top: 100px; }
         section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
 
@@ -70,19 +81,21 @@
         h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
         .hero p { color: var(--text-muted); font-size: 1.25rem; max-width: 700px; margin: 0 auto 2rem; }
 
+        .hero-buttons {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+        }
+
         .cta-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: #ffffff;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 25px var(--accent-glow);
-            border: none;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--accent); color: #ffffff;
+            padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none;
+            font-weight: 600; transition: all 0.3s ease;
+            box-shadow: 0 0 25px var(--accent-glow); border: none; cursor: pointer; font-family: inherit; font-size: 1rem;
         }
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px var(--accent-glow); }
+        
+        .cta-btn.outline { background: transparent; border: 2px solid var(--accent); box-shadow: none; }
+        .cta-btn.outline:hover { background: rgba(139, 92, 246, 0.1); }
 
         h2 { font-size: 2.5rem; margin-bottom: 3rem; text-align: center; font-weight: 700; }
 
@@ -90,14 +103,12 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            align-items: start;
         }
 
         .service-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 2rem;
-            border-radius: 16px;
-            backdrop-filter: blur(5px);
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 2rem; border-radius: 16px; backdrop-filter: blur(5px);
             transition: transform 0.3s, border-color 0.3s;
         }
         .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
@@ -105,17 +116,16 @@
         .service-card p { color: var(--text-muted); font-size: 0.95rem; }
 
         .portfolio-item {
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: border-color 0.3s, transform 0.3s;
+            border-radius: 12px; overflow: hidden; background: var(--card-bg);
+            border: 1px solid var(--border-color); text-decoration: none; color: inherit;
+            display: block; transition: border-color 0.3s, transform 0.3s; cursor: pointer;
         }
         .portfolio-item:hover { border-color: var(--accent); transform: translateY(-4px); }
-        .portfolio-item img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        
+        .portfolio-item img { width: 100%; object-fit: cover; border-bottom: 1px solid var(--border-color); display: block; }
+        .portfolio-item[data-orientation="horizontal"] img { aspect-ratio: 16 / 9; }
+        .portfolio-item[data-orientation="vertical"] img { aspect-ratio: 9 / 16; }
+        
         .portfolio-content { padding: 1.5rem; }
         
         .seo-text p { color: var(--text-muted); font-size: 0.95rem; text-align: center; max-width: 800px; margin: 0 auto; }
@@ -123,44 +133,149 @@
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(0px);
             display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            z-index: 9999;
+            opacity: 0; pointer-events: none; 
+            transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+            z-index: 9999; padding: 1rem; perspective: 1000px;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; backdrop-filter: blur(12px); }
         
         .modal-content {
-            background: var(--bg-dark); border: 1px solid var(--accent);
-            padding: 3rem 2rem; border-radius: 20px; text-align: center;
-            position: relative; transform: translateY(30px); transition: transform 0.3s ease;
-            box-shadow: 0 0 40px var(--accent-glow);
-            max-width: 90%; width: 380px;
+            background: var(--bg-dark); border: 1px solid var(--border-color);
+            padding: 2.5rem 2rem; border-radius: 20px; text-align: center;
+            position: relative; 
+            transform: translateY(60px) scale(0.9) rotateX(-5deg); filter: blur(10px); opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
+            max-width: 100%; width: 420px; max-height: 90vh; overflow-y: auto;
         }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1) rotateX(0); filter: blur(0); opacity: 1; }
         
+        .modal-content.brief-content { width: 650px; text-align: left; }
+        
+        /* КИНОТЕАТРАЛЬНЫЙ ПЛЕЕР */
+        .modal-content.video-content { 
+            width: 1000px; 
+            padding: 0; 
+            background: transparent; 
+            border: none;
+            box-shadow: none;
+            overflow: visible; 
+            height: 80vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-container {
+            width: 100%; height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .video-container iframe, .video-container video {
+            width: 100%; height: 100%;
+            border: none;
+            background: #000;
+            object-fit: contain;
+        }
+        .video-close {
+            position: absolute; top: -45px; right: 0; background: none; border: none;
+            color: #fff; font-size: 2.5rem; cursor: pointer; transition: color 0.3s;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); z-index: 10;
+        }
+        .video-close:hover { color: var(--accent); }
+
         .modal-close {
             position: absolute; top: 15px; right: 20px; background: none; border: none;
             color: var(--text-muted); font-size: 2rem; cursor: pointer; transition: color 0.3s;
         }
         .modal-close:hover { color: white; }
         
-        .tg-link {
-            display: inline-flex; align-items: center; gap: 12px;
-            background: #2AABEE; color: white; padding: 1rem 2rem;
-            border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem;
-            margin-top: 1.5rem; transition: transform 0.3s, box-shadow 0.3s;
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            color: white; padding: 1rem 1.5rem;
+            border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.05rem;
+            margin-top: 10px; transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%; border: none; cursor: pointer; font-family: inherit;
         }
-        .tg-link:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(42, 171, 238, 0.4); }
-        .tg-link svg { width: 26px; height: 26px; fill: white; }
+        .social-btn svg { width: 24px; height: 24px; fill: white; flex-shrink: 0; }
+        
+        .btn-tg { background: #2AABEE; }
+        .btn-tg:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(42, 171, 238, 0.3); }
+        
+        .btn-wa { background: #25D366; }
+        .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
+        
+        .btn-wb { background: #cb11ab; }
+        .btn-wb:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(203, 17, 171, 0.3); }
+
+        .brief-input {
+            width: 100%; padding: 12px 15px; margin-top: 12px;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--border-color);
+            border-radius: 8px; color: white; font-family: inherit; font-size: 0.95rem;
+            outline: none; transition: border-color 0.3s;
+        }
+        .brief-input:focus { border-color: var(--accent); }
+        
+        .brief-buttons-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 1.5rem;
+        }
+
+        /* Красивые галочки (чекбоксы) для формы Брифа */
+        .checkbox-group {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+        }
+        .custom-cb {
+            display: flex; align-items: flex-start; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: color 0.3s;
+        }
+        .custom-cb:hover { color: white; }
+        .custom-cb input { display: none; }
+        .cb-box {
+            width: 18px; height: 18px; border: 1px solid var(--border-color); border-radius: 4px; 
+            margin-right: 8px; margin-top: 2px; display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.4); transition: all 0.2s; flex-shrink: 0;
+        }
+        .custom-cb input:checked + .cb-box { background: var(--accent); border-color: var(--accent); }
+        .custom-cb input:checked + .cb-box::after { content: '✓'; color: white; font-size: 12px; }
+
+        /* ===== ИДЕАЛЬНАЯ МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+        @media (max-width: 768px) {
+            body { text-align: center; } 
+            
+            nav { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .logo-glow { height: 75px; }
+            
+            .hero { padding-top: 4rem; padding-bottom: 3rem; }
+            h1 { font-size: 2.2rem; text-align: center; }
+            .hero p { font-size: 1.1rem; text-align: center; }
+            h2 { font-size: 2rem; text-align: center; }
+            
+            .hero-buttons { flex-direction: column; width: 100%; padding: 0 1rem; }
+            .cta-btn { width: 100%; }
+            
+            .service-card { text-align: center; padding: 1.5rem; }
+            .portfolio-content { text-align: center; }
+            .seo-text p { text-align: center; }
+            
+            .modal-content { padding: 2rem 1.5rem; width: 95%; text-align: center; }
+            .modal-content.brief-content { text-align: center; padding: 1.5rem 1rem; }
+            .checkbox-group { grid-template-columns: 1fr; }
+            
+            .modal-content.video-content { padding: 0; height: 40vh; }
+            .video-close { top: -35px; right: 5px; font-size: 2rem; }
+            
+            .brief-buttons-grid { grid-template-columns: 1fr; } 
+        }
     </style>
 </head>
 <body>
 
     <header>
         <nav>
-            <img src="logo.png" alt="Логотип" style="height: 90px; object-fit: contain;">
-            <a href="#contacts" class="cta-btn" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">Связаться</a>
+            <img src="logo.png?v=2" alt="Логотип mbadun видеограф" class="logo-glow" onerror="this.style.border='1px solid red'; this.alt='ОШИБКА: Файл logo.png не найден';">
+            <a href="#contacts" class="cta-btn" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;" onclick="document.getElementById('contact-modal').classList.add('active'); return false;">Связаться со мной</a>
         </nav>
     </header>
 
@@ -168,16 +283,21 @@
         <section class="hero">
             <h1 id="dyn-hero-title">Загрузка...</h1>
             <p id="dyn-hero-subtitle">Подключение к базе...</p>
-            <a href="#portfolio" class="cta-btn">Смотреть работы</a>
+            
+            <div class="hero-buttons">
+                <!-- Кнопка вызова окна с Брифом -->
+                <button class="cta-btn outline" onclick="document.getElementById('brief-modal').classList.add('active')">Запросить стоимость</button>
+                <a href="#portfolio" class="cta-btn">Мои работы</a>
+            </div>
         </section>
 
         <section id="services">
-            <h2>Наши услуги и форматы</h2>
+            <h2>Мои услуги и форматы</h2>
             <div class="services-grid" id="dyn-services"></div>
         </section>
 
         <section id="portfolio">
-            <h2>Наше портфолио</h2>
+            <h2>Мои работы</h2>
             <div class="portfolio-grid" id="dyn-portfolio"></div>
         </section>
 
@@ -187,142 +307,319 @@
         </section>
     </main>
 
-    <footer id="contacts">
-        <p>&copy; <span id="year"></span> Ваш Бренд. Готовы заказать ролики? Напишите нам.</p>
+    <footer>
+        <p>&copy; <span id="year"></span> mbadun видеограф. Готов обсудить ваш проект и задачи.</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
     </footer>
 
-    <div id="contact-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff;">Свяжитесь со мной</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Обсудим ваш проект и задачи</p>
-            
-            <a href="https://t.me/mikerover" target="_blank" class="tg-link">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"/>
-                </svg>
-                <span>@mikerover</span>
-            </a>
+    <!-- ОКНО ВИДЕО ПЛЕЕРА -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="modal-content video-content">
+            <button class="video-close">&times;</button>
+            <div class="video-container" id="video-container">
+                <!-- Плеер создается здесь автоматически -->
+            </div>
         </div>
     </div>
 
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        async function loadContent() {
-            let data;
+    <!-- ОКНО КОНТАКТОВ (Открывается по кнопке в шапке) -->
+    <div id="contact-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #fff;">Связаться со мной</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Выберите удобный мессенджер для связи</p>
             
-            try {
-                // Пытаемся сформировать правильный URL для загрузки (помогает избежать ошибок в песочницах)
-                const fetchUrl = new URL('content.json?nocache=' + Date.now(), window.location.href);
-                const response = await fetch(fetchUrl);
-                
-                if (!response.ok) {
-                    throw new Error('Файл не найден на сервере');
-                }
-                
-                data = await response.json();
-            } catch (error) {
-                console.warn("Файл content.json недоступен (вероятно, включен предпросмотр). Загружаем демо-данные.", error);
-                // Запасные данные, чтобы сайт работал и выглядел красиво в любых условиях предпросмотра
-                data = {
-                    "meta_title": "Заказать видео | Рекламные ролики",
-                    "meta_description": "Создаем рекламные ролики, презентации и контент.",
-                    "hero_title": "Профессиональный продакшн: заказать видео и ролики",
-                    "hero_subtitle": "Ищете, где заказать видео для бизнеса? Мы создаем потрясающие видео, коммерческую анимацию и контент, который увеличивает продажи.",
-                    "services": [
-                        { "icon": "🎬", "title": "Реклама и Промо", "description": "Нужно заказать видео рекламу? Мы знаем, как привлечь внимание. Вы можете заказать рекламный ролик любой сложности." },
-                        { "icon": "📦", "title": "Для Маркетплейсов", "description": "Селлерам изготовим видео товара с инфографикой. Спрашиваете про видео Озон — мы берем всё на себя." },
-                        { "icon": "📊", "title": "Презентации", "description": "У нас можно заказать слайд-шоу, презентации проекта, нового товара или бизнеса." }
-                    ],
-                    "portfolio": [],
-                    "seo_title": "Где заказать ролики под ключ?",
-                    "seo_text": "Если вы думаете, где заказать ролики, наш продакшн предлагает полный цикл производства."
-                };
-            }
+            <a href="https://t.me/mikerover" target="_blank" class="social-btn btn-tg">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"/></svg>
+                <span>@mikerover</span>
+            </a>
+            
+            <a href="https://wa.me/79990000000" target="_blank" class="social-btn btn-wa">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                <span>@mike_rover</span>
+            </a>
+            
+            <button class="social-btn btn-wb copy-wb" style="font-size: 0.95rem; margin-top: 10px;">
+                <svg viewBox="0 0 24 24" font-family="sans-serif"><circle cx="12" cy="12" r="11" fill="white" fill-opacity="0.2"/><text x="12" y="16.5" font-size="12" fill="white" font-weight="900" text-anchor="middle">WB</text></svg>
+                <span>Скопировать ссылку</span>
+            </button>
+        </div>
+    </div>
 
-            try {
-                // Функция безопасной вставки текста
-                const setText = (id, text) => {
-                    const el = document.getElementById(id);
-                    if (el) el.innerHTML = text;
-                };
+    <!-- ОКНО БРИФА (ОЦЕНКА СТОИМОСТИ - Открывается с главной кнопки) -->
+    <div id="brief-modal" class="modal-overlay">
+        <div class="modal-content brief-content">
+            <button class="modal-close">&times;</button>
+            <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #fff; text-transform: uppercase; letter-spacing: 1px;">БРИФ</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Ответьте на 5 вопросов для точной оценки стоимости проекта.</p>
+            
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">1. Формат видео</label>
+                <div class="checkbox-group">
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Реклама"><span class="cb-box"></span>Рекламный ролик</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Маркетплейсы"><span class="cb-box"></span>Маркетплейсы</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Reels / Shorts"><span class="cb-box"></span>Reels / Shorts</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Презентация"><span class="cb-box"></span>Обзор / Презентация</label>
+                </div>
+            </div>
 
-                setText('doc-title', data.meta_title || 'Портфолио');
-                
-                const descMeta = document.getElementById('doc-desc');
-                if(descMeta) descMeta.setAttribute('content', data.meta_description || '');
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">2. Цели и задачи</label>
+                <div class="checkbox-group">
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Рост продаж"><span class="cb-box"></span>Увеличение продаж</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Имидж бренда"><span class="cb-box"></span>Узнаваемость бренда</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Обучение"><span class="cb-box"></span>Инструкция / Обучение</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Вовлечение"><span class="cb-box"></span>Привлечение аудитории</label>
+                </div>
+            </div>
 
-                setText('dyn-hero-title', data.hero_title || 'Добро пожаловать');
-                setText('dyn-hero-subtitle', data.hero_subtitle || '');
-                setText('dyn-seo-title', data.seo_title || '');
-                setText('dyn-seo-text', data.seo_text || '');
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">3. Где будет размещаться?</label>
+                <div class="checkbox-group">
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="WB / Ozon"><span class="cb-box"></span>WB / Ozon</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="YouTube / Rutube"><span class="cb-box"></span>YouTube / Rutube</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="Telegram / VK / Reels"><span class="cb-box"></span>Telegram / VK / Reels</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="Сайт компании"><span class="cb-box"></span>Сайт компании</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="ТВ"><span class="cb-box"></span>ТВ</label>
+                </div>
+            </div>
 
-                const servicesContainer = document.getElementById('dyn-services');
-                servicesContainer.innerHTML = '';
-                if (data.services && data.services.length > 0) {
-                    data.services.forEach(srv => {
-                        servicesContainer.innerHTML += `
-                            <article class="service-card">
-                                <div style="font-size: 2.5rem; margin-bottom: 10px;">${srv.icon || '✨'}</div>
-                                <h3>${srv.title}</h3>
-                                <p>${srv.description}</p>
-                            </article>
-                        `;
-                    });
-                }
+            <div style="text-align: left; margin-bottom: 12px;">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">4. Есть ли у вас пример (референс)?</label>
+                <input type="text" id="b-reference" class="brief-input" style="margin-top: 0;" placeholder="Ссылка на видео, которое вам нравится...">
+            </div>
 
-                const portfolioContainer = document.getElementById('dyn-portfolio');
-                portfolioContainer.innerHTML = '';
-                if (data.portfolio && data.portfolio.length > 0) {
-                    data.portfolio.forEach(item => {
-                        portfolioContainer.innerHTML += `
-                            <a href="${item.video_url || '#'}" class="portfolio-item" target="_blank">
-                                <img src="${item.thumbnail || 'https://placehold.co/600x400/18181b/8b5cf6?text=Видео'}" alt="${item.title}">
-                                <div class="portfolio-content">
-                                    <h3>${item.title}</h3>
-                                    <p>${item.description}</p>
-                                </div>
-                            </a>
-                        `;
-                    });
-                } else {
-                    portfolioContainer.innerHTML = '<p style="text-align: center; color: #94a3b8; grid-column: 1 / -1;">Работы скоро появятся.</p>';
-                }
-                
-            } catch (renderError) {
-                console.error("Ошибка при отображении данных:", renderError);
-                document.getElementById('dyn-services').innerHTML = '<p style="color: #ef4444; text-align: center; grid-column: 1/-1;">Произошла ошибка при загрузке дизайна. Пожалуйста, обновите страницу.</p>';
-            }
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">5. Примерный бюджет и сроки</label>
+                <input type="text" id="b-budget" class="brief-input" style="margin-top: 0;" placeholder="Например: 1000 рублей...">
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <p style="font-size: 0.95rem; color: #fff; margin-bottom: 12px; text-align: center;">Куда отправить заявку?</p>
+                <div class="brief-buttons-grid">
+                    <button class="social-btn btn-tg" onclick="submitBrief('tg')" style="margin-top:0;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"/></svg>
+                        <span>Telegram</span>
+                    </button>
+                    <button class="social-btn btn-wa" onclick="submitBrief('wa')" style="margin-top:0;">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        <span>WhatsApp</span>
+                    </button>
+                </div>
+                <button class="social-btn btn-wb" onclick="submitBrief('wb')" style="font-size: 0.95rem; margin-top: 10px;">
+                    <svg viewBox="0 0 24 24" font-family="sans-serif"><circle cx="12" cy="12" r="11" fill="white" fill-opacity="0.2"/><text x="12" y="16.5" font-size="12" fill="white" font-weight="900" text-anchor="middle">WB</text></svg>
+                    <span>Скопировать для чата WB</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    async function loadContent() {
+        let data;
+        try {
+            const fetchUrl = new URL('content.json?nocache=' + Date.now(), window.location.href);
+            const response = await fetch(fetchUrl);
+            if (!response.ok) throw new Error('Файл не найден');
+            data = await response.json();
+        } catch (error) {
+            console.warn("Ошибка загрузки базы, показываю стандартные данные");
+            return;
         }
 
-        function setupContactModal() {
-            const modal = document.getElementById('contact-modal');
-            const closeBtn = document.querySelector('.modal-close');
-            const contactLinks = document.querySelectorAll('a[href="#contacts"]');
+        try {
+            const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerHTML = text; };
 
-            // Открытие окна при клике на любую ссылку "Связаться"
-            contactLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault(); // Отменяем обычный переход вниз страницы
-                    modal.classList.add('active');
+            setText('doc-title', data.meta_title || 'Портфолио');
+            if(document.getElementById('doc-desc')) document.getElementById('doc-desc').setAttribute('content', data.meta_description || '');
+
+            setText('dyn-hero-title', data.hero_title || 'Добро пожаловать');
+            setText('dyn-hero-subtitle', data.hero_subtitle || '');
+            setText('dyn-seo-title', data.seo_title || '');
+            setText('dyn-seo-text', data.seo_text || '');
+
+            const servicesContainer = document.getElementById('dyn-services');
+            servicesContainer.innerHTML = '';
+            if (data.services && data.services.length > 0) {
+                data.services.forEach(srv => {
+                    servicesContainer.innerHTML += `
+                        <div class="service-card">
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">${srv.icon || '✨'}</div>
+                            <h3>${srv.title}</h3>
+                            <p>${srv.description}</p>
+                        </div>
+                    `;
                 });
-            });
+            }
 
-            // Закрытие по крестику
-            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+            const portfolioContainer = document.getElementById('dyn-portfolio');
+            portfolioContainer.innerHTML = '';
+            if (data.portfolio && data.portfolio.length > 0) {
+                data.portfolio.forEach(item => {
+                    const orientation = item.orientation || 'horizontal';
+                    portfolioContainer.innerHTML += `
+                        <a href="${item.video_url || '#'}" data-video="${item.video_url || '#'}" data-orientation="${orientation}" class="portfolio-item">
+                            <img src="${item.thumbnail || 'https://placehold.co/600x400/18181b/8b5cf6?text=Видео'}" alt="${item.title}">
+                            <div class="portfolio-content">
+                                <h3>${item.title}</h3>
+                                <p>${item.description}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+        } catch (renderError) {
+            console.error("Ошибка отрисовки:", renderError);
+        }
+    }
+
+    function getEmbedUrl(url) {
+        if (!url) return '';
+        let ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+        if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1`;
+        let vimeoMatch = url.match(/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/);
+        if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[3]}?autoplay=1`;
+        return url; 
+    }
+
+    function setupVideoModal() {
+        const modal = document.getElementById('video-modal');
+        if (!modal) return; 
+        
+        const closeBtn = modal.querySelector('.video-close');
+        const container = document.getElementById('video-container');
+
+        document.getElementById('dyn-portfolio').addEventListener('click', (e) => {
+            const item = e.target.closest('.portfolio-item');
+            if (!item) return;
             
-            // Закрытие по клику на темный фон вокруг окна
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('active');
+            e.preventDefault(); 
+            const rawUrl = item.dataset.video;
+            if (!rawUrl || rawUrl === '#') return;
+
+            // Если это локальный файл .mp4 (Надежный код для браузеров)
+            if (rawUrl.toLowerCase().endsWith('.mp4')) {
+                container.innerHTML = `
+                    <video controls autoplay muted playsinline style="width: 100%; height: 100%; border-radius: 12px; outline: none; background: #000; object-fit: contain;">
+                        <source src="${rawUrl}" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>`;
+            } 
+            // Если это ссылка на YouTube / Vimeo
+            else {
+                const embedUrl = getEmbedUrl(rawUrl);
+                container.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 12px;"></iframe>`;
+            }
+            modal.classList.add('active');
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            setTimeout(() => container.innerHTML = '', 500); 
+        };
+
+        if(closeBtn) closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+
+    function setupContactModal() {
+        const modal = document.getElementById('contact-modal');
+        if (!modal) return;
+        
+        const closeBtn = modal.querySelector('.modal-close');
+        if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+        
+        const copyWbBtn = document.querySelector('.copy-wb');
+        if(copyWbBtn) {
+            copyWbBtn.addEventListener('click', () => {
+                const link = "https://t.me/mikerover"; 
+                const textArea = document.createElement("textarea");
+                textArea.value = link;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('Ссылка скопирована!');
+                } catch (err) {}
+                document.body.removeChild(textArea);
             });
         }
+    }
 
-        // Запускаем все функции после загрузки страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            loadContent();
-            setupContactModal();
-        });
-    </script>
+    function setupBriefModal() {
+        const modal = document.getElementById('brief-modal');
+        if (!modal) return;
+        
+        const closeBtn = modal.querySelector('.modal-close');
+        if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+    }
+
+    /* Функция сбора данных из чекбоксов и отправки заявки */
+    window.submitBrief = function(platform) {
+        // Функция для сбора всех отмеченных галочек в строку
+        const getCheckedValues = (name) => {
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+                        .map(cb => cb.value)
+                        .join(', ');
+        };
+
+        const format = getCheckedValues('b-format');
+        const goal = getCheckedValues('b-goal');
+        const placement = getCheckedValues('b-placement');
+        const reference = document.getElementById('b-reference').value;
+        const budget = document.getElementById('b-budget').value;
+        
+        let rawText = "Здравствуйте! Направляю заполненный БРИФ:\n";
+        
+        if(format) rawText += "\n1. Формат видео: " + format;
+        if(goal) rawText += "\n2. Цели и задачи: " + goal;
+        if(placement) rawText += "\n3. Где размещаем: " + placement;
+        if(reference) rawText += "\n4. Пример (референс): " + reference;
+        if(budget) rawText += "\n5. Бюджет и сроки: " + budget;
+        
+        // Если клиент ничего не заполнил
+        if (!format && !goal && !placement && !reference && !budget) {
+            rawText = "Здравствуйте! Хочу обсудить видеопроект.";
+        }
+
+        // Если клиент выбрал WB - копируем текст
+        if (platform === 'wb') {
+            const textArea = document.createElement("textarea");
+            textArea.value = rawText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('Готовый текст заявки скопирован! Теперь просто нажмите "Вставить" в чате на Wildberries.');
+            } catch (err) {}
+            document.body.removeChild(textArea);
+        } 
+        // Если это ТГ или WA - отправляем сразу в приложение с текстом
+        else {
+            let encodedText = encodeURIComponent(rawText);
+            if (platform === 'tg') {
+                window.open(`https://t.me/mikerover?text=${encodedText}`, '_blank');
+            } else if (platform === 'wa') {
+                // ВАЖНО: Замените номер на свой реальный WhatsApp номер
+                window.open(`https://wa.me/79990000000?text=${encodedText}`, '_blank'); 
+            }
+        }
+        
+        document.getElementById('brief-modal').classList.remove('active');
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await loadContent();
+        setupContactModal();
+        setupBriefModal();
+        setupVideoModal();
+    });
+</script>
 </body>
 </html>
