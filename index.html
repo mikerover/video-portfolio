@@ -1,4 +1,4 @@
-A<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -399,7 +399,6 @@ A<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- ОКНО КОНТАКТОВ -->
     <div id="contact-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
@@ -423,7 +422,6 @@ A<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- ОКНО БРИФА -->
     <div id="brief-modal" class="modal-overlay">
         <div class="modal-content brief-content">
             <button class="modal-close">&times;</button>
@@ -557,46 +555,45 @@ A<!DOCTYPE html>
             const rawUrl = item.dataset.video;
             if (!rawUrl || rawUrl === '#') return;
 
-            // ИСПРАВЛЕНИЕ ДЛЯ IOS: СНАЧАЛА делаем окно видимым
-            // Айфон должен убедиться, что видео добавляется в видимый контейнер
+            // ШАГ 1: Сначала делаем окно видимым для Safari
             modal.classList.add('active');
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
-                container.innerHTML = ''; // Очищаем контейнер
+                container.innerHTML = ''; 
 
                 const vid = document.createElement('video');
                 vid.id = 'ios-player';
                 vid.controls = true;
                 
-                // ПРОБИВАЕМ БЛОКИРОВКИ IOS (свойства)
+                // ШАГ 2: Устанавливаем строгие параметры для iOS (БЕЗ ЗВУКА)
                 vid.muted = true;
                 vid.defaultMuted = true;
                 vid.autoplay = true;
+                vid.playsInline = true;
 
-                // ПРОБИВАЕМ БЛОКИРОВКИ IOS (атрибуты - Safari любит их больше)
-                vid.setAttribute('muted', '');
-                vid.setAttribute('autoplay', '');
-                vid.setAttribute('playsinline', ''); 
-                vid.setAttribute('webkit-playsinline', '');
+                // Дублируем атрибутами
+                vid.setAttribute('muted', 'muted');
+                vid.setAttribute('autoplay', 'autoplay');
+                vid.setAttribute('playsinline', 'playsinline'); 
+                vid.setAttribute('webkit-playsinline', 'webkit-playsinline');
                 vid.setAttribute('preload', 'auto');
                 
                 vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);";
                 
-                // Подгружаем видео через тег source - самый безопасный метод
-                const source = document.createElement('source');
-                source.src = rawUrl;
-                source.type = 'video/mp4';
-                vid.appendChild(source);
+                // ШАГ 3: Прямая передача ссылки (iOS так надежнее)
+                vid.src = rawUrl;
 
+                // ШАГ 4: Добавляем видео в уже видимое окно
                 container.appendChild(vid);
                 
-                // Принудительно заставляем браузер обновить данные о файле
-                vid.load();
+                // ВАЖНО: Убран vid.load(), так как он убивал "клик" для Apple!
                 
+                // ШАГ 5: Запускаем
                 const playPromise = vid.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        console.warn("iOS заблокировал автозапуск (включен Режим энергосбережения): ", error);
+                        console.warn("iOS Safari заблокировал автозапуск: ", error);
+                        vid.controls = true; // Оставляем кнопки, чтобы клиент нажал Play вручную
                     });
                 }
             } else {
@@ -609,7 +606,7 @@ A<!DOCTYPE html>
             
             const vid = container.querySelector('video');
             if (vid) {
-                vid.pause();
+                vid.pause(); // Принудительно глушим звук
                 vid.src = ""; 
             }
             
