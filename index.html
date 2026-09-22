@@ -567,15 +567,14 @@
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
                 container.innerHTML = `
-                    <video id="ios-player" controls playsinline webkit-playsinline preload="auto" style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);">
+                    <video id="ios-player" autoplay controls playsinline webkit-playsinline preload="auto" style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);">
                         <source src="${rawUrl}" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>`;
                 
-                // СПЕЦИАЛЬНЫЙ ФИКС ДЛЯ iPHONE: Принудительный старт видео после инициализации плеера
+                // СПЕЦИАЛЬНЫЙ ФИКС ДЛЯ iPHONE: Синхронный запуск без .load(), который сбрасывал жест клика пользователя
                 const vid = document.getElementById('ios-player');
                 if (vid) {
-                    vid.load(); // Заставляем iPhone подгрузить данные
                     const playPromise = vid.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(error => {
