@@ -561,21 +561,32 @@
             if (!rawUrl || rawUrl === '#') return;
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
-                // ДОБАВЛЕНО MUTED ДЛЯ АВТОЗАПУСКА НА IPHONE
-                container.innerHTML = `
-                    <video id="ios-player" autoplay muted controls playsinline webkit-playsinline preload="auto" style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);">
-                        <source src="${rawUrl}" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
-                    </video>`;
+                // ИСПРАВЛЕНИЕ ДЛЯ IOS: СОЗДАЕМ ПЛЕЕР ЧЕРЕЗ JS, А НЕ ЧЕРЕЗ ТЕКСТ
+                container.innerHTML = ''; // Очищаем контейнер
+
+                const vid = document.createElement('video');
+                vid.id = 'ios-player';
+                vid.autoplay = true;
+                vid.controls = true;
+                vid.muted = true; // Критично для автозапуска в Safari
+                vid.defaultMuted = true; // Запасная проверка для iOS
+                vid.preload = 'auto';
                 
-                const vid = document.getElementById('ios-player');
-                if (vid) {
-                    const playPromise = vid.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.warn("iOS блокировка автозапуска: ", error);
-                        });
-                    }
+                // Специальные атрибуты для Apple
+                vid.setAttribute('playsinline', ''); 
+                vid.setAttribute('webkit-playsinline', '');
+                
+                vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);";
+                vid.src = rawUrl;
+
+                container.appendChild(vid);
+                
+                // Синхронный запуск сразу после клика
+                const playPromise = vid.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.warn("iOS заблокировал автозапуск (возможно включен Режим энергосбережения): ", error);
+                    });
                 }
             } else {
                 container.innerHTML = `<iframe src="${rawUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; object-fit: contain;"></iframe>`;
@@ -587,7 +598,10 @@
             modal.classList.remove('active');
             
             const vid = container.querySelector('video');
-            if (vid) vid.pause();
+            if (vid) {
+                vid.pause();
+                vid.src = ""; // Принудительно убиваем загрузку
+            }
             
             setTimeout(() => container.innerHTML = '', 500); 
         };
