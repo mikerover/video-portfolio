@@ -121,9 +121,7 @@
         }
         .portfolio-item:hover { border-color: var(--accent); transform: translateY(-4px); }
         
-        .portfolio-item img { width: 100%; object-fit: cover; border-bottom: 1px solid var(--border-color); display: block; }
-        .portfolio-item[data-orientation="horizontal"] img { aspect-ratio: 16 / 9; }
-        .portfolio-item[data-orientation="vertical"] img { aspect-ratio: 9 / 16; }
+        .portfolio-item img { width: 100%; object-fit: cover; border-bottom: 1px solid var(--border-color); display: block; aspect-ratio: 16 / 9; }
         
         .portfolio-content { padding: 1.5rem; }
         
@@ -180,7 +178,7 @@
             align-items: center;
         }
         
-        /* УНИВЕРСАЛЬНЫЙ АДАПТИВНЫЙ ПЛЕЕР */
+        /* УНИВЕРСАЛЬНЫЙ АДАПТИВНЫЙ ПЛЕЕР (РАСТЯГИВАЕТ ЛЮБОЕ ВИДЕО ПРАВИЛЬНО) */
         .video-container iframe, .video-container video {
             width: 100vw; 
             height: 100dvh;
@@ -190,7 +188,7 @@
             box-shadow: none;
             border: none;
             background: transparent;
-            object-fit: contain; /* Магия: видео само впишется в экран без обрезки и искажений */
+            object-fit: contain; 
         }
 
         .video-close {
@@ -266,6 +264,38 @@
         .custom-cb input:checked + .cb-box { background: var(--accent); border-color: var(--accent); }
         .custom-cb input:checked + .cb-box::after { content: '✓'; color: white; font-size: 12px; }
 
+        /* СТИЛИ ДЛЯ КНОПКИ НАВЕРХ */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 90;
+        }
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-top-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
         @media (max-width: 768px) {
             body { text-align: left; } 
             
@@ -295,6 +325,14 @@
             .brief-buttons-grid { grid-template-columns: 1fr; gap: 10px; } 
             
             .video-close { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 2rem; }
+
+            /* Адаптация кнопки Наверх для мобильных */
+            .scroll-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
         }
     </style>
 </head>
@@ -334,6 +372,13 @@
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
     </footer>
 
+    <!-- КНОПКА НАВЕРХ -->
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Наверх">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
     <!-- ОКНО ВИДЕО ПЛЕЕРА -->
     <div id="video-modal" class="modal-overlay">
         <div class="modal-content video-content">
@@ -351,13 +396,13 @@
             <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #fff;">Связаться со мной</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Выберите удобный мессенджер для связи</p>
             
-            <!-- Telegram с использованием deep link для обхода блокировок браузера -->
+            <!-- Telegram: обход блокировок с помощью tg://resolve -->
             <a href="tg://resolve?domain=mikerover" class="social-btn btn-tg">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"/></svg>
                 <span>@mikerover</span>
             </a>
             
-            <!-- WhatsApp с вашим реальным номером -->
+            <!-- WhatsApp с реальным номером телефона -->
             <a href="https://wa.me/79174489817" target="_blank" class="social-btn btn-wa">
                 <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                 <span>WhatsApp</span>
@@ -473,9 +518,8 @@
             portfolioContainer.innerHTML = '';
             if (data.portfolio && data.portfolio.length > 0) {
                 data.portfolio.forEach(item => {
-                    const orientation = item.orientation || 'horizontal';
                     portfolioContainer.innerHTML += `
-                        <a href="${item.video_url || '#'}" data-video="${item.video_url || '#'}" data-orientation="${orientation}" class="portfolio-item">
+                        <a href="${item.video_url || '#'}" data-video="${item.video_url || '#'}" class="portfolio-item">
                             <img src="${item.thumbnail || 'https://placehold.co/600x400/18181b/8b5cf6?text=Видео'}" alt="${item.title}">
                             <div class="portfolio-content">
                                 <h3>${item.title}</h3>
@@ -562,6 +606,25 @@
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
     }
 
+    // Настройка кнопки "Наверх"
+    function setupScrollToTop() {
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        if (!scrollTopBtn) return;
+
+        window.addEventListener('scroll', () => {
+            // Показываем кнопку, если прокрутили больше 300 пикселей вниз
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     window.submitBrief = function(platform) {
         const getCheckedValues = (name) => {
             return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
@@ -598,10 +661,8 @@
         } else {
             let encodedText = encodeURIComponent(rawText);
             if (platform === 'tg') {
-                // Использование deep link tg:// для обхода блокировок
                 window.location.href = `tg://resolve?domain=mikerover&text=${encodedText}`;
             } else if (platform === 'wa') {
-                // WhatsApp с вашим реальным номером
                 window.open(`https://wa.me/79174489817?text=${encodedText}`, '_blank'); 
             }
         }
@@ -614,6 +675,7 @@
         setupContactModal();
         setupBriefModal();
         setupVideoModal();
+        setupScrollToTop();
     });
 </script>
 </body>
