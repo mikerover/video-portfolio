@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+A<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -385,19 +385,16 @@
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
     </footer>
 
-    <!-- КНОПКА НАВЕРХ -->
     <button id="scrollTopBtn" class="scroll-top-btn" title="Наверх">
         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
 
-    <!-- ОКНО ВИДЕО ПЛЕЕРА -->
     <div id="video-modal" class="modal-overlay">
         <div class="modal-content video-content">
             <button class="video-close">&times;</button>
             <div class="video-container" id="video-container">
-                <!-- Плеер создается здесь автоматически -->
             </div>
         </div>
     </div>
@@ -560,38 +557,51 @@
             const rawUrl = item.dataset.video;
             if (!rawUrl || rawUrl === '#') return;
 
+            // ИСПРАВЛЕНИЕ ДЛЯ IOS: СНАЧАЛА делаем окно видимым
+            // Айфон должен убедиться, что видео добавляется в видимый контейнер
+            modal.classList.add('active');
+
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
-                // ИСПРАВЛЕНИЕ ДЛЯ IOS: СОЗДАЕМ ПЛЕЕР ЧЕРЕЗ JS, А НЕ ЧЕРЕЗ ТЕКСТ
                 container.innerHTML = ''; // Очищаем контейнер
 
                 const vid = document.createElement('video');
                 vid.id = 'ios-player';
-                vid.autoplay = true;
                 vid.controls = true;
-                vid.muted = true; // Критично для автозапуска в Safari
-                vid.defaultMuted = true; // Запасная проверка для iOS
-                vid.preload = 'auto';
                 
-                // Специальные атрибуты для Apple
+                // ПРОБИВАЕМ БЛОКИРОВКИ IOS (свойства)
+                vid.muted = true;
+                vid.defaultMuted = true;
+                vid.autoplay = true;
+
+                // ПРОБИВАЕМ БЛОКИРОВКИ IOS (атрибуты - Safari любит их больше)
+                vid.setAttribute('muted', '');
+                vid.setAttribute('autoplay', '');
                 vid.setAttribute('playsinline', ''); 
                 vid.setAttribute('webkit-playsinline', '');
+                vid.setAttribute('preload', 'auto');
                 
                 vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);";
-                vid.src = rawUrl;
+                
+                // Подгружаем видео через тег source - самый безопасный метод
+                const source = document.createElement('source');
+                source.src = rawUrl;
+                source.type = 'video/mp4';
+                vid.appendChild(source);
 
                 container.appendChild(vid);
                 
-                // Синхронный запуск сразу после клика
+                // Принудительно заставляем браузер обновить данные о файле
+                vid.load();
+                
                 const playPromise = vid.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        console.warn("iOS заблокировал автозапуск (возможно включен Режим энергосбережения): ", error);
+                        console.warn("iOS заблокировал автозапуск (включен Режим энергосбережения): ", error);
                     });
                 }
             } else {
                 container.innerHTML = `<iframe src="${rawUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; object-fit: contain;"></iframe>`;
             }
-            modal.classList.add('active');
         });
 
         const closeModal = () => {
@@ -600,7 +610,7 @@
             const vid = container.querySelector('video');
             if (vid) {
                 vid.pause();
-                vid.src = ""; // Принудительно убиваем загрузку
+                vid.src = ""; 
             }
             
             setTimeout(() => container.innerHTML = '', 500); 
