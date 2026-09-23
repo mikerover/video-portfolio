@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Видео Портфолио</title>
     <style>
-        /* Блокируем горизонтальный скролл */
         html, body {
             margin: 0;
             padding: 0;
@@ -18,7 +17,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Оптимизированный фон */
         body {
             background-image: radial-gradient(circle at 50% -20%, #2a1b3d, #0f0f0f 50%);
             background-attachment: fixed;
@@ -29,7 +27,6 @@
             padding: 40px 20px;
         }
 
-        /* Оригинальный размер текста */
         h1 {
             font-size: 2.5rem;
             margin: 0;
@@ -143,7 +140,6 @@
             opacity: 1;
         }
 
-        /* Оригинальный крестик справа */
         #close-modal {
             position: absolute;
             top: 20px;
@@ -200,8 +196,7 @@
         <p class="subtitle">Портфолио коммерческих работ и моушн-дизайна</p>
     </header>
 
-    <div class="portfolio-grid" id="portfolio">
-    </div>
+    <div class="portfolio-grid" id="portfolio"></div>
 
     <div class="contact-section">
         <h2>Связаться со мной:</h2>
@@ -215,7 +210,6 @@
         <button id="close-modal">✕</button>
         <div id="player-container">
             <div id="loader"></div>
-            <!-- Правильный плеер, который запускал видео -->
             <video id="main-player" autoplay muted controls playsinline webkit-playsinline preload="auto"></video>
         </div>
     </div>
@@ -227,15 +221,27 @@
         const closeModalBtn = document.getElementById('close-modal');
         const scrollTopBtn = document.getElementById('scroll-top');
 
-        fetch('content.json')
+        // Принудительный сброс кэша браузера
+        fetch('content.json?nocache=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
-                data.forEach(item => {
+                // "Всеядный" загрузчик (спасет, если в json пропала скобка)
+                let items = [];
+                if (Array.isArray(data)) {
+                    items = data;
+                } else if (typeof data === 'object' && data !== null) {
+                    const foundArray = Object.values(data).find(val => Array.isArray(val));
+                    items = foundArray ? foundArray : [data];
+                }
+
+                items.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'video-item';
+                    const imgUrl = item.image || '';
+                    const title = item.title || 'Видео';
                     card.innerHTML = `
-                        <img src="img/${item.image}" alt="${item.title}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#222';">
-                        <div class="video-title">${item.title}</div>
+                        <img src="img/${imgUrl}" alt="${title}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#222';">
+                        <div class="video-title">${title}</div>
                     `;
                     card.onclick = () => openVideo(item.video_url);
                     portfolioGrid.appendChild(card);
@@ -244,10 +250,11 @@
             .catch(err => console.error(err));
 
         function openVideo(url) {
+            if (!url) return;
             modal.classList.add('active');
             player.src = url;
             player.play().catch(e => {
-                console.log("Автозапуск заблокирован iOS:", e);
+                console.log("Ожидание клика iOS:", e);
             });
         }
 
