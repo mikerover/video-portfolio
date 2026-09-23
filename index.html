@@ -28,10 +28,15 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 8vw, 3.5rem);
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 2px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
+            max-width: 100%;
         }
 
         p.subtitle {
@@ -142,8 +147,8 @@
 
         #close-modal {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: max(20px, env(safe-area-inset-top));
+            left: max(20px, env(safe-area-inset-left));
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
@@ -241,7 +246,9 @@
         function openVideo(url) {
             modal.classList.add('active');
             player.src = url;
-            player.play().catch(e => console.log(e));
+            player.play().catch(e => {
+                console.log("Автозапуск заблокирован iOS:", e);
+            });
         }
 
         closeModalBtn.onclick = () => {
