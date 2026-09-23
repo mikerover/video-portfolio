@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ЖЕСТКАЯ ФИКСАЦИЯ МАСШТАБА ДЛЯ IOS, чтобы сайт не шатался -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title id="doc-title">Загрузка...</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +22,16 @@
             --main-font: 'Inter', system-ui, sans-serif;
         }
 
+        /* ЖЕСТКАЯ БЛОКИРОВКА ГОРИЗОНТАЛЬНОГО СКРОЛЛА ДЛЯ IOS */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0; 
+            padding: 0;
+            overscroll-behavior-x: none;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -28,8 +39,8 @@
             color: var(--text-main);
             font-family: var(--main-font);
             line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased; /* Улучшение шрифтов на iOS */
+            -webkit-font-smoothing: antialiased; 
+            position: relative;
         }
 
         header {
@@ -66,16 +77,17 @@
 
         .hero { text-align: center; position: relative; padding-top: 6rem; padding-bottom: 4rem; }
         
-        /* ОПТИМИЗАЦИЯ ДЛЯ IOS: Замена тяжелого filter: blur на легкий radial-gradient */
+        /* Замена тяжелого blur на легкий оптический градиент для iPhone */
         .hero::before {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 500px; height: 500px;
+            max-width: 100%;
             background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 65%);
             z-index: -1;
-            pointer-events: none; /* Чтобы клики проходили сквозь него */
+            pointer-events: none; 
         }
 
         h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
@@ -119,7 +131,7 @@
             border-radius: 12px; overflow: hidden; background: var(--card-bg);
             border: 1px solid var(--border-color); text-decoration: none; color: inherit;
             display: block; transition: border-color 0.3s, transform 0.3s; cursor: pointer;
-            -webkit-transform: translateZ(0); /* Оптимизация скролла карточек */
+            -webkit-transform: translateZ(0); 
         }
         .portfolio-item:hover { border-color: var(--accent); transform: translateY(-4px); }
         
@@ -131,10 +143,10 @@
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); /* Сплошной цвет вместо размытия */
+            background: rgba(0, 0, 0, 0.9);
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; 
-            transition: opacity 0.3s ease; /* Быстрая анимация без фильтров */
+            transition: opacity 0.3s ease;
             z-index: 9999; padding: 1rem;
         }
         .modal-overlay.active { 
@@ -166,15 +178,16 @@
         .modal-content.video-content { 
             padding: 0; background: transparent; border: none; box-shadow: none;
             overflow: hidden; display: flex; align-items: center; justify-content: center;
-            width: 100vw; height: 100dvh; max-width: 100%; border-radius: 0; transform: none !important; 
+            width: 100%; height: 100%; max-width: 100%; border-radius: 0; transform: none !important; 
         }
 
         .video-container {
-            width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative;
+            width: 100%; height: 100%; position: relative;
         }
         
         .video-loader {
-            position: absolute; display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--text-muted); z-index: 1;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--text-muted); z-index: 10;
         }
         .spinner {
             width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--accent);
@@ -182,11 +195,15 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* Абсолютное позиционирование решает проблему шатания экрана */
         .video-container iframe, .video-container video {
-            width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; max-width: 100%; max-height: 100%;
             border-radius: 0; box-shadow: none; border: none; background: transparent;
-            object-fit: contain; z-index: 2;
-            -webkit-transform: translateZ(0); /* Обязательно для iOS видео */
+            object-fit: contain; z-index: 5;
+            -webkit-transform: translateZ(0); 
+            opacity: 0; /* Визуально скрываем, но физически оставляем для загрузки iOS */
+            transition: opacity 0.3s;
         }
 
         .video-close {
@@ -312,23 +329,28 @@
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
     </footer>
 
-    <!-- Стрелка наверх -->
     <button id="scrollTopBtn" class="scroll-top-btn" title="Наверх">
         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
 
-    <!-- Окно видеоплеера -->
+    <!-- Окно видеоплеера (Универсальное) -->
     <div id="video-modal" class="modal-overlay">
         <div class="modal-content video-content">
             <button class="video-close">&times;</button>
             <div class="video-container" id="video-container">
-                <!-- Сюда вставляется плеер -->
+                <div class="video-loader" style="display: none;">
+                    <div class="spinner"></div>
+                </div>
+                <!-- Плеер существует всегда. Autoplay и Muted обязательны для iOS -->
+                <video id="ios-player" autoplay muted controls playsinline webkit-playsinline style="display: block; opacity: 0;"></video>
+                <iframe id="iframe-player" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="display: none; opacity: 0;"></iframe>
             </div>
         </div>
     </div>
 
+    <!-- Модальное окно контактов с актуальным номером -->
     <div id="contact-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
@@ -352,6 +374,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно Брифа -->
     <div id="brief-modal" class="modal-overlay">
         <div class="modal-content brief-content">
             <button class="modal-close">&times;</button>
@@ -473,7 +496,9 @@
         if (!modal) return; 
         
         const closeBtn = modal.querySelector('.video-close');
-        const container = document.getElementById('video-container');
+        const loader = document.querySelector('.video-loader');
+        const vid = document.getElementById('ios-player');
+        const iframe = document.getElementById('iframe-player');
 
         document.getElementById('dyn-portfolio').addEventListener('click', (e) => {
             const item = e.target.closest('.portfolio-item');
@@ -483,72 +508,66 @@
             const rawUrl = item.dataset.video;
             if (!rawUrl || rawUrl === '#') return;
 
-            // Показываем окно сразу
+            // Сначала открываем окно, чтобы Safari не считал нас фоновой рекламой
             modal.classList.add('active');
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
-                // Добавляем красивый индикатор загрузки, пока айфон качает видео
-                container.innerHTML = `
-                    <div class="video-loader">
-                        <div class="spinner"></div>
-                        <span>Подключение видео...</span>
-                    </div>
-                `; 
-
-                // Создаем видео тег
-                const vid = document.createElement('video');
-                vid.id = 'ios-player';
-                vid.controls = true;
+                // Работаем с нативным видео
+                iframe.style.display = 'none';
+                iframe.src = '';
                 
-                // ЖЕСТКИЕ ПРАВИЛА ДЛЯ APPLE
-                vid.muted = true; // ОБЯЗАТЕЛЬНО для автозапуска
-                vid.defaultMuted = true;
-                vid.autoplay = true;
-                vid.playsInline = true;
-
-                vid.setAttribute('muted', '');
-                vid.setAttribute('autoplay', '');
-                vid.setAttribute('playsinline', ''); 
-                vid.setAttribute('webkit-playsinline', '');
+                // ВАЖНО: Видео должно быть display:block (видимым физически), иначе iOS остановит загрузку!
+                vid.style.display = 'block'; 
+                vid.style.opacity = '0'; // Скрываем визуально на время загрузки
+                loader.style.display = 'flex';
                 
-                vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; -webkit-transform: translateZ(0); transform: translateZ(0); display: none;";
-                
+                // Передаем ссылку. Без команды load(), она ломает авторизацию клика в iOS
                 vid.src = rawUrl;
-
-                // Как только видео скачало первый кадр и готово играть - убираем спиннер
-                vid.addEventListener('playing', () => {
-                    const loader = container.querySelector('.video-loader');
-                    if(loader) loader.style.display = 'none';
-                    vid.style.display = 'block';
-                });
-
-                container.appendChild(vid);
                 
-                // Пробуем запустить. Если Safari упрямится - спиннер скроется, а юзер нажмет play сам.
+                // Как только начнется проигрывание
+                vid.onplaying = () => {
+                    loader.style.display = 'none';
+                    vid.style.opacity = '1';
+                };
+
+                // На случай если автоплей не сработает (Режим энергосбережения), все равно показываем плеер
+                vid.onloadeddata = () => {
+                    vid.style.opacity = '1'; 
+                };
+
+                // Принудительный старт (Разрешено, так как у нас есть muted и autoplay в HTML)
                 const playPromise = vid.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        vid.controls = true; 
-                        vid.style.display = 'block';
-                        const loader = container.querySelector('.video-loader');
-                        if(loader) loader.style.display = 'none';
+                        // Если Айфон все-таки заблокировал, просто убираем спиннер и даем нажать пальцем
+                        loader.style.display = 'none';
+                        vid.style.opacity = '1'; 
                     });
                 }
             } else {
-                container.innerHTML = `<iframe src="${rawUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; object-fit: contain;"></iframe>`;
+                // Работаем с YouTube/Vimeo
+                vid.style.display = 'none';
+                vid.pause();
+                vid.src = '';
+                
+                loader.style.display = 'flex'; 
+                iframe.style.display = 'block';
+                iframe.style.opacity = '1';
+                iframe.src = rawUrl;
+                iframe.onload = () => { loader.style.display = 'none'; };
             }
         });
 
         const closeModal = () => {
             modal.classList.remove('active');
-            const vid = container.querySelector('video');
+            // Убиваем звук и загрузку при закрытии
             if (vid) {
                 vid.pause();
                 vid.src = ""; 
-                vid.removeAttribute('src');
-                vid.load();
             }
-            setTimeout(() => container.innerHTML = '', 300); 
+            if (iframe) {
+                iframe.src = "";
+            }
         };
 
         if(closeBtn) closeBtn.addEventListener('click', closeModal);
@@ -567,7 +586,7 @@
         const copyWbBtn = document.querySelector('.copy-wb');
         if(copyWbBtn) {
             copyWbBtn.addEventListener('click', () => {
-                const link = "https://t.me/mikerover"; 
+                const link = "tg://resolve?domain=mikerover"; 
                 const textArea = document.createElement("textarea");
                 textArea.value = link; document.body.appendChild(textArea); textArea.select();
                 try { document.execCommand('copy'); alert('Ссылка скопирована!'); } catch (err) {}
