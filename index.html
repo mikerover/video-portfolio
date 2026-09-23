@@ -29,13 +29,12 @@
             font-family: var(--main-font);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; /* Улучшение шрифтов на iOS */
         }
 
         header {
             border-bottom: 1px solid var(--border-color);
-            background: rgba(9, 9, 11, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(9, 9, 11, 0.9);
             position: fixed;
             width: 100%;
             top: 0;
@@ -66,16 +65,17 @@
         section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
 
         .hero { text-align: center; position: relative; padding-top: 6rem; padding-bottom: 4rem; }
+        
+        /* ОПТИМИЗАЦИЯ ДЛЯ IOS: Замена тяжелого filter: blur на легкий radial-gradient */
         .hero::before {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px; height: 400px;
-            background: var(--accent);
-            filter: blur(150px);
-            opacity: 0.35;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 65%);
             z-index: -1;
+            pointer-events: none; /* Чтобы клики проходили сквозь него */
         }
 
         h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
@@ -109,8 +109,6 @@
         .service-card {
             background: var(--card-bg); border: 1px solid var(--border-color);
             padding: 2rem; border-radius: 16px; 
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             transition: transform 0.3s, border-color 0.3s;
         }
         .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
@@ -121,6 +119,7 @@
             border-radius: 12px; overflow: hidden; background: var(--card-bg);
             border: 1px solid var(--border-color); text-decoration: none; color: inherit;
             display: block; transition: border-color 0.3s, transform 0.3s; cursor: pointer;
+            -webkit-transform: translateZ(0); /* Оптимизация скролла карточек */
         }
         .portfolio-item:hover { border-color: var(--accent); transform: translateY(-4px); }
         
@@ -132,36 +131,30 @@
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
+            background: rgba(0, 0, 0, 0.9); /* Сплошной цвет вместо размытия */
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; 
-            transition: opacity 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
-            z-index: 9999; padding: 1rem; perspective: 1000px;
+            transition: opacity 0.3s ease; /* Быстрая анимация без фильтров */
+            z-index: 9999; padding: 1rem;
         }
         .modal-overlay.active { 
             opacity: 1; pointer-events: auto; 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px); 
         }
         
         .modal-content {
             background: var(--bg-dark); border: 1px solid var(--border-color);
             padding: 2.5rem 2rem; border-radius: 20px; text-align: center;
             position: relative; 
-            -webkit-transform: translateY(60px) scale(0.9) rotateX(-5deg);
-            transform: translateY(60px) scale(0.9) rotateX(-5deg); 
-            filter: blur(10px); opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.95); 
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
             max-width: 100%; width: 420px; max-height: 90vh; overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
         .modal-overlay.active .modal-content { 
-            -webkit-transform: translateY(0) scale(1) rotateX(0);
-            transform: translateY(0) scale(1) rotateX(0); 
-            filter: blur(0); opacity: 1; 
+            transform: scale(1); 
+            opacity: 1; 
         }
         
         .modal-content.brief-content { width: 650px; text-align: left; }
@@ -171,59 +164,37 @@
             padding: 0;
         }
         .modal-content.video-content { 
-            padding: 0; 
-            background: transparent; 
-            border: none;
-            box-shadow: none;
-            overflow: hidden; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            height: 100dvh; 
-            max-width: 100%;
-            border-radius: 0;
-            transform: none !important; 
+            padding: 0; background: transparent; border: none; box-shadow: none;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            width: 100vw; height: 100dvh; max-width: 100%; border-radius: 0; transform: none !important; 
         }
 
         .video-container {
-            width: 100%; 
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative;
         }
         
+        .video-loader {
+            position: absolute; display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--text-muted); z-index: 1;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--accent);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .video-container iframe, .video-container video {
-            width: 100vw; 
-            height: 100dvh;
-            max-width: 100vw;
-            max-height: 100dvh;
-            border-radius: 0; 
-            box-shadow: none;
-            border: none;
-            background: transparent;
-            object-fit: contain; 
+            width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh;
+            border-radius: 0; box-shadow: none; border: none; background: transparent;
+            object-fit: contain; z-index: 2;
+            -webkit-transform: translateZ(0); /* Обязательно для iOS видео */
         }
 
         .video-close {
             position: fixed; 
-            top: max(20px, env(safe-area-inset-top)); 
-            right: max(25px, env(safe-area-inset-right)); 
-            background: rgba(0,0,0,0.5); 
-            border: none;
-            color: #fff; 
-            font-size: 2.5rem; 
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer; 
-            transition: background 0.3s, color 0.3s;
-            text-shadow: none; 
-            z-index: 10000;
+            top: max(20px, env(safe-area-inset-top)); right: max(25px, env(safe-area-inset-right)); 
+            background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 2.5rem; 
+            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: background 0.3s, color 0.3s; z-index: 10000;
         }
         .video-close:hover { color: var(--accent); background: rgba(0,0,0,0.8); }
 
@@ -244,10 +215,8 @@
         
         .btn-tg { background: #2AABEE; }
         .btn-tg:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(42, 171, 238, 0.3); }
-        
         .btn-wa { background: #25D366; }
         .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
-        
         .btn-wb { background: #cb11ab; }
         .btn-wb:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(203, 17, 171, 0.3); }
 
@@ -259,16 +228,10 @@
         }
         .brief-input:focus { border-color: var(--accent); }
         
-        .brief-buttons-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 1.5rem;
-        }
+        .brief-buttons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 1.5rem; }
 
-        .checkbox-group {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
-        }
-        .custom-cb {
-            display: flex; align-items: flex-start; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: color 0.3s;
-        }
+        .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .custom-cb { display: flex; align-items: flex-start; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: color 0.3s; }
         .custom-cb:hover { color: white; }
         .custom-cb input { display: none; }
         .cb-box {
@@ -280,72 +243,36 @@
         .custom-cb input:checked + .cb-box::after { content: '✓'; color: white; font-size: 12px; }
 
         .scroll-top-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 15px var(--accent-glow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 90;
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--accent); color: white; border: none; border-radius: 50%;
+            cursor: pointer; box-shadow: 0 4px 15px var(--accent-glow);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; z-index: 90;
         }
-        .scroll-top-btn.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .scroll-top-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px var(--accent-glow);
-        }
+        .scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .scroll-top-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--accent-glow); }
 
         @media (max-width: 768px) {
             body { text-align: left; } 
-            
             nav { flex-direction: row; justify-content: space-between; padding: 0.8rem 1rem; align-items: center; gap: 10px; }
             .logo-glow { height: 45px; } 
             .cta-btn[href="#contacts"] { padding: 0.5rem 1rem; font-size: 0.8rem; flex-shrink: 0; }
-            
             section { padding: 3rem 1rem; }
-            
             .hero { padding-top: 7rem; padding-bottom: 2rem; text-align: center; }
             h1 { font-size: 2.2rem; text-align: center; }
             .hero p { font-size: 1.05rem; text-align: center; padding: 0 0.5rem; }
             h2 { font-size: 1.8rem; text-align: center; margin-bottom: 2rem; }
-            
             .hero-buttons { flex-direction: column; width: 100%; padding: 0; gap: 0.8rem; }
             .hero-buttons .cta-btn { width: 100%; box-sizing: border-box; }
-            
             .services-grid, .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            
             .service-card { text-align: center; padding: 1.5rem; }
             .portfolio-content { text-align: left; }
-            
             .modal-content { padding: 2rem 1.2rem; width: 95%; max-height: 90vh; }
             .modal-content.brief-content { text-align: left; padding: 1.5rem 1rem; }
             .checkbox-group { grid-template-columns: 1fr; gap: 12px; }
-            
             .brief-buttons-grid { grid-template-columns: 1fr; gap: 10px; } 
-            
             .video-close { top: max(15px, env(safe-area-inset-top)); right: max(15px, env(safe-area-inset-right)); width: 40px; height: 40px; font-size: 2rem; }
-
-            .scroll-top-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-            }
+            .scroll-top-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; }
         }
     </style>
 </head>
@@ -385,16 +312,19 @@
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
     </footer>
 
+    <!-- Стрелка наверх -->
     <button id="scrollTopBtn" class="scroll-top-btn" title="Наверх">
         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
 
+    <!-- Окно видеоплеера -->
     <div id="video-modal" class="modal-overlay">
         <div class="modal-content video-content">
             <button class="video-close">&times;</button>
             <div class="video-container" id="video-container">
+                <!-- Сюда вставляется плеер -->
             </div>
         </div>
     </div>
@@ -500,9 +430,7 @@
 
         try {
             const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerHTML = text; };
-
             setText('doc-title', data.meta_title || 'Портфолио');
-
             setText('dyn-hero-title', data.hero_title || 'Добро пожаловать');
             setText('dyn-hero-subtitle', data.hero_subtitle || '');
 
@@ -526,7 +454,7 @@
                 data.portfolio.forEach(item => {
                     portfolioContainer.innerHTML += `
                         <a href="${item.video_url || '#'}" data-video="${item.video_url || '#'}" class="portfolio-item">
-                            <img src="${item.thumbnail || 'https://placehold.co/600x400/18181b/8b5cf6?text=Видео'}" alt="${item.title}">
+                            <img src="${item.thumbnail || 'https://placehold.co/600x400/18181b/8b5cf6?text=Видео'}" alt="${item.title}" loading="lazy">
                             <div class="portfolio-content">
                                 <h3>${item.title}</h3>
                                 <p>${item.description}</p>
@@ -555,45 +483,55 @@
             const rawUrl = item.dataset.video;
             if (!rawUrl || rawUrl === '#') return;
 
-            // ШАГ 1: Сначала делаем окно видимым для Safari
+            // Показываем окно сразу
             modal.classList.add('active');
 
             if (rawUrl.toLowerCase().endsWith('.mp4')) {
-                container.innerHTML = ''; 
+                // Добавляем красивый индикатор загрузки, пока айфон качает видео
+                container.innerHTML = `
+                    <div class="video-loader">
+                        <div class="spinner"></div>
+                        <span>Подключение видео...</span>
+                    </div>
+                `; 
 
+                // Создаем видео тег
                 const vid = document.createElement('video');
                 vid.id = 'ios-player';
                 vid.controls = true;
                 
-                // ШАГ 2: Устанавливаем строгие параметры для iOS (БЕЗ ЗВУКА)
-                vid.muted = true;
+                // ЖЕСТКИЕ ПРАВИЛА ДЛЯ APPLE
+                vid.muted = true; // ОБЯЗАТЕЛЬНО для автозапуска
                 vid.defaultMuted = true;
                 vid.autoplay = true;
                 vid.playsInline = true;
 
-                // Дублируем атрибутами
-                vid.setAttribute('muted', 'muted');
-                vid.setAttribute('autoplay', 'autoplay');
-                vid.setAttribute('playsinline', 'playsinline'); 
-                vid.setAttribute('webkit-playsinline', 'webkit-playsinline');
-                vid.setAttribute('preload', 'auto');
+                vid.setAttribute('muted', '');
+                vid.setAttribute('autoplay', '');
+                vid.setAttribute('playsinline', ''); 
+                vid.setAttribute('webkit-playsinline', '');
                 
-                vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; transform: translateZ(0);";
+                vid.style.cssText = "width: 100vw; height: 100dvh; max-width: 100%; max-height: 100%; border-radius: 0; outline: none; background: transparent; object-fit: contain; -webkit-transform: translateZ(0); transform: translateZ(0); display: none;";
                 
-                // ШАГ 3: Прямая передача ссылки (iOS так надежнее)
                 vid.src = rawUrl;
 
-                // ШАГ 4: Добавляем видео в уже видимое окно
+                // Как только видео скачало первый кадр и готово играть - убираем спиннер
+                vid.addEventListener('playing', () => {
+                    const loader = container.querySelector('.video-loader');
+                    if(loader) loader.style.display = 'none';
+                    vid.style.display = 'block';
+                });
+
                 container.appendChild(vid);
                 
-                // ВАЖНО: Убран vid.load(), так как он убивал "клик" для Apple!
-                
-                // ШАГ 5: Запускаем
+                // Пробуем запустить. Если Safari упрямится - спиннер скроется, а юзер нажмет play сам.
                 const playPromise = vid.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.warn("iOS Safari заблокировал автозапуск: ", error);
-                        vid.controls = true; // Оставляем кнопки, чтобы клиент нажал Play вручную
+                    playPromise.catch(() => {
+                        vid.controls = true; 
+                        vid.style.display = 'block';
+                        const loader = container.querySelector('.video-loader');
+                        if(loader) loader.style.display = 'none';
                     });
                 }
             } else {
@@ -603,14 +541,14 @@
 
         const closeModal = () => {
             modal.classList.remove('active');
-            
             const vid = container.querySelector('video');
             if (vid) {
-                vid.pause(); // Принудительно глушим звук
+                vid.pause();
                 vid.src = ""; 
+                vid.removeAttribute('src');
+                vid.load();
             }
-            
-            setTimeout(() => container.innerHTML = '', 500); 
+            setTimeout(() => container.innerHTML = '', 300); 
         };
 
         if(closeBtn) closeBtn.addEventListener('click', closeModal);
@@ -622,7 +560,6 @@
     function setupContactModal() {
         const modal = document.getElementById('contact-modal');
         if (!modal) return;
-        
         const closeBtn = modal.querySelector('.modal-close');
         if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
@@ -632,13 +569,8 @@
             copyWbBtn.addEventListener('click', () => {
                 const link = "https://t.me/mikerover"; 
                 const textArea = document.createElement("textarea");
-                textArea.value = link;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    alert('Ссылка скопирована!');
-                } catch (err) {}
+                textArea.value = link; document.body.appendChild(textArea); textArea.select();
+                try { document.execCommand('copy'); alert('Ссылка скопирована!'); } catch (err) {}
                 document.body.removeChild(textArea);
             });
         }
@@ -647,7 +579,6 @@
     function setupBriefModal() {
         const modal = document.getElementById('brief-modal');
         if (!modal) return;
-        
         const closeBtn = modal.querySelector('.modal-close');
         if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
@@ -656,25 +587,16 @@
     function setupScrollToTop() {
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         if (!scrollTopBtn) return;
-
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
+            if (window.scrollY > 300) scrollTopBtn.classList.add('visible');
+            else scrollTopBtn.classList.remove('visible');
         });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
     }
 
     window.submitBrief = function(platform) {
         const getCheckedValues = (name) => {
-            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-                        .map(cb => cb.value)
-                        .join(', ');
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(', ');
         };
 
         const format = getCheckedValues('b-format');
@@ -683,35 +605,22 @@
         const budget = document.getElementById('b-budget').value;
         
         let rawText = "Здравствуйте! Направляю заполненный БРИФ:\n";
-        
         if(format) rawText += "\n1. Формат видео: " + format;
         if(goal) rawText += "\n2. Цели и задачи: " + goal;
         if(placement) rawText += "\n3. Где размещаем: " + placement;
         if(budget) rawText += "\n4. Бюджет/Референс: " + budget;
-        
-        if (!format && !goal && !placement && !budget) {
-            rawText = "Здравствуйте! Хочу обсудить видеопроект.";
-        }
+        if (!format && !goal && !placement && !budget) rawText = "Здравствуйте! Хочу обсудить видеопроект.";
 
         if (platform === 'wb') {
             const textArea = document.createElement("textarea");
-            textArea.value = rawText;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                alert('Готовый текст заявки скопирован! Теперь просто нажмите "Вставить" в чате на Wildberries.');
-            } catch (err) {}
+            textArea.value = rawText; document.body.appendChild(textArea); textArea.select();
+            try { document.execCommand('copy'); alert('Готовый текст заявки скопирован! Теперь просто нажмите "Вставить" в чате на Wildberries.'); } catch (err) {}
             document.body.removeChild(textArea);
         } else {
             let encodedText = encodeURIComponent(rawText);
-            if (platform === 'tg') {
-                window.location.href = `tg://resolve?domain=mikerover&text=${encodedText}`;
-            } else if (platform === 'wa') {
-                window.open(`https://wa.me/79174489817?text=${encodedText}`, '_blank'); 
-            }
+            if (platform === 'tg') window.location.href = `tg://resolve?domain=mikerover&text=${encodedText}`;
+            else if (platform === 'wa') window.open(`https://wa.me/79174489817?text=${encodedText}`, '_blank'); 
         }
-        
         document.getElementById('brief-modal').classList.remove('active');
     };
 
