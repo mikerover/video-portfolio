@@ -168,7 +168,7 @@
             z-index: 10001;
         }
 
-        /* Контейнер плеера (адаптивный) */
+        /* Контейнер плеера */
         #player-container {
             width: 100%;
             height: 100%;
@@ -187,36 +187,6 @@
             object-fit: contain;
             background: transparent;
         }
-
-        /* Индикатор загрузки */
-        #loader {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px; height: 40px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            z-index: -1;
-        }
-
-        /* Окно диагностики ошибок */
-        #error-overlay {
-            display: none;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 0, 0, 0.8);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            z-index: 10000;
-        }
-
-        @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -228,7 +198,6 @@
 
     <!-- Сетка портфолио -->
     <div class="portfolio-grid" id="portfolio">
-        <!-- Видео будут загружаться сюда скриптом -->
     </div>
 
     <!-- Контакты -->
@@ -247,8 +216,6 @@
     <div id="video-modal">
         <button id="close-modal">✕</button>
         <div id="player-container">
-            <div id="loader"></div>
-            <div id="error-overlay">ОШИБКА: Файл не найден</div>
             <video id="main-player" autoplay muted controls playsinline webkit-playsinline preload="auto"></video>
         </div>
     </div>
@@ -258,85 +225,42 @@
         const modal = document.getElementById('video-modal');
         const player = document.getElementById('main-player');
         const closeModalBtn = document.getElementById('close-modal');
-        const loader = document.getElementById('loader');
-        const errorOverlay = document.getElementById('error-overlay');
         const scrollTopBtn = document.getElementById('scroll-top');
 
-        // Загрузка данных
+        // Загрузка данных без вывода ошибок на экран
         fetch('content.json')
-            .then(response => {
-                if (!response.ok) throw new Error('Файл content.json не найден');
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                // Умный алгоритм поиска списка видео
-                let items = [];
-                if (Array.isArray(data)) {
-                    items = data;
-                } else if (typeof data === 'object' && data !== null) {
-                    const foundArray = Object.values(data).find(val => Array.isArray(val));
-                    if (foundArray) {
-                        items = foundArray;
-                    } else {
-                        items = [data]; // Если случайно обернули в один объект
-                    }
-                } else {
-                    throw new Error('Не удалось распознать список видео в файле content.json');
-                }
-
-                items.forEach(item => {
+                data.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'video-item';
-                    
-                    // Защита от пустых полей
-                    const imageUrl = item.image ? item.image : '';
-                    const videoUrl = item.video_url ? item.video_url : '';
-                    const titleText = item.title ? item.title : 'Видео';
-
                     card.innerHTML = `
-                        <img src="img/${imageUrl}" alt="${titleText}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#222';">
-                        <div class="video-title">${titleText}</div>
+                        <img src="img/${item.image}" alt="${item.title}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#222';">
+                        <div class="video-title">${item.title}</div>
                     `;
-                    card.onclick = () => openVideo(videoUrl);
+                    card.onclick = () => openVideo(item.video_url);
                     portfolioGrid.appendChild(card);
                 });
             })
-            .catch(err => {
-                portfolioGrid.innerHTML = `
-                    <div style="text-align:center; width:100%; color: #ff6b6b; padding: 20px; background: #2a0000; border-radius: 10px;">
-                        <h3 style="margin-top:0;">Сбой загрузки портфолио!</h3>
-                        <p>В вашем файле <b>content.json</b> допущена критическая ошибка.</p>
-                        <p style="font-family: monospace; background: #000; padding: 10px; color: #fff;">Лог: ${err.message}</p>
-                    </div>`;
-            });
+            .catch(err => console.error('Ошибка загрузки:', err));
 
         // Открытие видео
         function openVideo(url) {
-            if (!url) return;
             modal.classList.add('active');
-            errorOverlay.style.display = 'none';
             player.src = url;
-            
             player.play().catch(e => {
-                console.log("Автозапуск заблокирован iOS, ждем клика:", e);
+                console.log("Ожидание клика iOS:", e);
             });
         }
-
-        // Диагностика 404
-        player.addEventListener('error', function() {
-            if(player.error && player.error.code === 4) {
-                errorOverlay.innerHTML = "ОШИБКА 404:<br>Файл видео не найден на GitHub!";
-                errorOverlay.style.display = 'block';
-            }
-        });
 
         // Закрытие модального окна
         closeModalBtn.onclick = () => {
             modal.classList.remove('active');
             player.pause();
-            player.src = '';
+            player.src = ''; 
         };
 
+        // Закрытие по клику мимо видео
         modal.onclick = (e) => {
             if (e.target === modal || e.target === document.getElementById('player-container')) {
                 closeModalBtn.click();
