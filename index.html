@@ -265,10 +265,10 @@
         const errorOverlay = document.getElementById('error-overlay');
         const scrollTopBtn = document.getElementById('scroll-top');
 
-        // Загрузка данных (content.json)
-        fetch('content.json')
+        // Загрузка данных (content.json) с принудительным обходом кэша
+        fetch('content.json?nocache=' + new Date().getTime())
             .then(response => {
-                if (!response.ok) throw new Error('Не удалось загрузить базу видео');
+                if (!response.ok) throw new Error('Файл content.json не найден на сервере (Ошибка 404)');
                 return response.json();
             })
             .then(data => {
@@ -284,7 +284,14 @@
                 });
             })
             .catch(err => {
-                portfolioGrid.innerHTML = '<p style="text-align:center; width:100%;">Ошибка загрузки портфолио. Проверьте content.json</p>';
+                // Если сломался JSON, выводим детальную причину
+                portfolioGrid.innerHTML = `
+                    <div style="text-align:center; width:100%; color: #ff6b6b; padding: 20px; background: #2a0000; border-radius: 10px;">
+                        <h3 style="margin-top:0;">Сбой загрузки портфолио!</h3>
+                        <p>В вашем файле <b>content.json</b> допущена синтаксическая ошибка (например, забытая запятая или кавычка).</p>
+                        <p style="font-family: monospace; background: #000; padding: 10px; color: #fff;">Технический лог: ${err.message}</p>
+                        <p>Пожалуйста, проверьте файл content.json на GitHub.</p>
+                    </div>`;
                 console.error(err);
             });
 
