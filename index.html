@@ -35,7 +35,6 @@
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 2px;
-            /* Защита от вылезания за пределы экрана */
             word-wrap: break-word;
             overflow-wrap: break-word;
             word-break: break-word;
@@ -152,7 +151,7 @@
             opacity: 1;
         }
 
-        /* ИСПРАВЛЕНИЕ ДЛЯ iPHONE: Крестик перенесен ВЛЕВО, чтобы не мешать звуку */
+        /* ИСПРАВЛЕНИЕ ДЛЯ iPHONE: Крестик перенесен ВЛЕВО */
         #close-modal {
             position: absolute;
             top: max(20px, env(safe-area-inset-top));
@@ -185,7 +184,7 @@
         video {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Умное масштабирование без черных рамок */
+            object-fit: contain;
             background: transparent;
         }
 
@@ -199,7 +198,7 @@
             border-top: 4px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            z-index: -1; /* Прячем за видео, когда оно загрузится */
+            z-index: -1;
         }
 
         /* Окно диагностики ошибок */
@@ -223,7 +222,6 @@
 <body>
 
     <header>
-        <!-- Текст, который теперь не вылезает за края -->
         <h1>ПРОФЕССИОНАЛЬНЫЙ ВИДЕОМОНТАЖ</h1>
         <p class="subtitle">Портфолио коммерческих работ и моушн-дизайна</p>
     </header>
@@ -251,7 +249,6 @@
         <div id="player-container">
             <div id="loader"></div>
             <div id="error-overlay">ОШИБКА: Файл не найден</div>
-            <!-- Легальный плеер с жесткими настройками для обхода блокировок Apple -->
             <video id="main-player" autoplay muted controls playsinline webkit-playsinline preload="auto"></video>
         </div>
     </div>
@@ -265,53 +262,67 @@
         const errorOverlay = document.getElementById('error-overlay');
         const scrollTopBtn = document.getElementById('scroll-top');
 
-        // Загрузка данных (content.json) с принудительным обходом кэша
-        fetch('content.json?nocache=' + new Date().getTime())
+        // Загрузка данных
+        fetch('content.json')
             .then(response => {
-                if (!response.ok) throw new Error('Файл content.json не найден на сервере (Ошибка 404)');
+                if (!response.ok) throw new Error('Файл content.json не найден');
                 return response.json();
             })
             .then(data => {
-                data.forEach(item => {
+                // Умный алгоритм поиска списка видео
+                let items = [];
+                if (Array.isArray(data)) {
+                    items = data;
+                } else if (typeof data === 'object' && data !== null) {
+                    const foundArray = Object.values(data).find(val => Array.isArray(val));
+                    if (foundArray) {
+                        items = foundArray;
+                    } else {
+                        items = [data]; // Если случайно обернули в один объект
+                    }
+                } else {
+                    throw new Error('Не удалось распознать список видео в файле content.json');
+                }
+
+                items.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'video-item';
+                    
+                    // Защита от пустых полей
+                    const imageUrl = item.image ? item.image : '';
+                    const videoUrl = item.video_url ? item.video_url : '';
+                    const titleText = item.title ? item.title : 'Видео';
+
                     card.innerHTML = `
-                        <img src="img/${item.image}" alt="${item.title}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#f00';">
-                        <div class="video-title">${item.title}</div>
+                        <img src="img/${imageUrl}" alt="${titleText}" class="preview-img" onerror="this.src=''; this.style.backgroundColor='#222';">
+                        <div class="video-title">${titleText}</div>
                     `;
-                    card.onclick = () => openVideo(item.video_url);
+                    card.onclick = () => openVideo(videoUrl);
                     portfolioGrid.appendChild(card);
                 });
             })
             .catch(err => {
-                // Если сломался JSON, выводим детальную причину
                 portfolioGrid.innerHTML = `
                     <div style="text-align:center; width:100%; color: #ff6b6b; padding: 20px; background: #2a0000; border-radius: 10px;">
                         <h3 style="margin-top:0;">Сбой загрузки портфолио!</h3>
-                        <p>В вашем файле <b>content.json</b> допущена синтаксическая ошибка (например, забытая запятая или кавычка).</p>
-                        <p style="font-family: monospace; background: #000; padding: 10px; color: #fff;">Технический лог: ${err.message}</p>
-                        <p>Пожалуйста, проверьте файл content.json на GitHub.</p>
+                        <p>В вашем файле <b>content.json</b> допущена критическая ошибка.</p>
+                        <p style="font-family: monospace; background: #000; padding: 10px; color: #fff;">Лог: ${err.message}</p>
                     </div>`;
-                console.error(err);
             });
 
-        // Открытие видео (iOS Safe)
+        // Открытие видео
         function openVideo(url) {
-            // Сначала показываем окно
+            if (!url) return;
             modal.classList.add('active');
             errorOverlay.style.display = 'none';
-            
-            // Подсовываем ссылку в уже существующий плеер
             player.src = url;
             
-            // Жесткий старт для Safari
             player.play().catch(e => {
                 console.log("Автозапуск заблокирован iOS, ждем клика:", e);
-                // Если автозапуск не прошел (режим экономии энергии), оставляем элементы управления
             });
         }
 
-        // Диагностика отсутствующих файлов (Ошибка 404)
+        // Диагностика 404
         player.addEventListener('error', function() {
             if(player.error && player.error.code === 4) {
                 errorOverlay.innerHTML = "ОШИБКА 404:<br>Файл видео не найден на GitHub!";
@@ -323,17 +334,16 @@
         closeModalBtn.onclick = () => {
             modal.classList.remove('active');
             player.pause();
-            player.src = ''; // Очищаем буфер
+            player.src = '';
         };
 
-        // Закрытие по клику мимо видео
         modal.onclick = (e) => {
             if (e.target === modal || e.target === document.getElementById('player-container')) {
                 closeModalBtn.click();
             }
         };
 
-        // Кнопка наверх - логика
+        // Кнопка наверх
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 scrollTopBtn.classList.add('visible');
