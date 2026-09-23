@@ -29,7 +29,7 @@
             padding: 40px 20px;
         }
 
-        /* ИСПРАВЛЕНИЕ ДЛЯ ANDROID: Резиновый текст и перенос длинных слов */
+        /* ИСПРАВЛЕНИЕ: Резиновый текст и перенос длинных слов для Android */
         h1 {
             font-size: clamp(1.8rem, 8vw, 3.5rem);
             margin: 0;
@@ -151,7 +151,7 @@
             opacity: 1;
         }
 
-        /* ИСПРАВЛЕНИЕ ДЛЯ iPHONE: Крестик перенесен ВЛЕВО */
+        /* ИСПРАВЛЕНИЕ: Крестик перенесен ВЛЕВО для iPhone */
         #close-modal {
             position: absolute;
             top: max(20px, env(safe-area-inset-top));
@@ -187,6 +187,21 @@
             object-fit: contain;
             background: transparent;
         }
+
+        /* Крутилка загрузки */
+        #loader {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px; height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -216,6 +231,7 @@
     <div id="video-modal">
         <button id="close-modal">✕</button>
         <div id="player-container">
+            <div id="loader"></div>
             <video id="main-player" autoplay muted controls playsinline webkit-playsinline preload="auto"></video>
         </div>
     </div>
@@ -227,7 +243,7 @@
         const closeModalBtn = document.getElementById('close-modal');
         const scrollTopBtn = document.getElementById('scroll-top');
 
-        // Загрузка данных без вывода ошибок на экран
+        // Старый, рабочий метод загрузки данных
         fetch('content.json')
             .then(response => response.json())
             .then(data => {
@@ -242,7 +258,7 @@
                     portfolioGrid.appendChild(card);
                 });
             })
-            .catch(err => console.error('Ошибка загрузки:', err));
+            .catch(err => console.error(err));
 
         // Открытие видео
         function openVideo(url) {
