@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     
-    <!-- ДОБАВЛЕНО ДЛЯ SEO: Мета-описание, которое будет отображаться в сниппете Google и Яндекса -->
-    <meta name="description" content="Профессиональный видеограф. Создание рекламных роликов, коммерческой анимации, моушн-дизайна и видео для маркетплейсов (WB, Ozon). Заказать видео для бизнеса.">
+    <!-- ДОБАВЛЕНО ДЛЯ SEO: Мета-описание (Сниппет для Google и Яндекса) -->
+    <meta name="description" content="Профессиональный видеограф. Создание рекламных роликов, коммерческой 3D анимации, моушн-дизайна и видео для маркетплейсов (Wildberries, Ozon). Заказать видео для бизнеса под ключ.">
+    
+    <!-- ДОБАВЛЕНО ДЛЯ SEO: Ключевые слова (Полезно для Яндекса и региональной выдачи) -->
+    <meta name="keywords" content="видеограф, рекламный ролик, моушн-дизайн, 3D анимация, видео для маркетплейсов, заказать видео, видео для Wildberries, видео для Ozon, видеопродакшн, создание видео Уфа, инфографика">
+    <meta name="author" content="mbadun">
+    
+    <!-- ДОБАВЛЕНО ДЛЯ SEO: Каноническая ссылка -->
+    <link rel="canonical" href="https://mikerover.github.io/video-portfolio/">
     
     <!-- ДОБАВЛЕНО ДЛЯ SEO: Теги Open Graph для красивого превью при отправке ссылки в Telegram, VK, WhatsApp -->
-    <meta property="og:title" content="Заказать видео | Рекламные ролики и моушн-дизайн">
-    <meta property="og:description" content="Создание рекламных роликов, видео для маркетплейсов и контента для бизнеса.">
+    <meta property="og:title" content="Заказать видео | Рекламные ролики, 3D анимация и моушн-дизайн">
+    <meta property="og:description" content="Создание крутых рекламных роликов, 3D анимации и видео для маркетплейсов. Повышаем ваши продажи с помощью качественного контента.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mikerover.github.io/video-portfolio/">
+    <meta property="og:image" content="https://mikerover.github.io/video-portfolio/logo.png">
+    <meta property="og:site_name" content="mbadun видеограф">
     
-    <!-- ИЗМЕНЕНО ДЛЯ SEO: SEO-заглушка вместо "Загрузка..." на случай, если поисковик не прочитает JavaScript -->
-    <title id="doc-title">Заказать видео | Рекламные ролики и портфолио видеографа</title>
+    <!-- ИЗМЕНЕНО ДЛЯ SEO: Максимально плотный Title -->
+    <title id="doc-title">Заказать видео | Рекламные ролики, 3D анимация и портфолио видеографа</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,7 +107,6 @@
             pointer-events: none; 
         }
 
-        /* ИСПРАВЛЕНИЕ: Добавлены переносы слов для Андроида (word-wrap) и скорректирован минимальный шрифт */
         h1 { 
             font-size: clamp(1.8rem, 5vw, 4rem); 
             line-height: 1.1; 
@@ -225,11 +234,10 @@
             transition: opacity 0.3s;
         }
 
-        /* ИСПРАВЛЕНИЕ: Крестик перенесен СЛЕВА ВВЕРХУ для Айфона */
         .video-close {
             position: fixed; 
             top: max(20px, env(safe-area-inset-top)); 
-            left: max(20px, env(safe-area-inset-left)); /* <- Изменено на left */
+            left: max(20px, env(safe-area-inset-left)); 
             background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 2.5rem; 
             width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: background 0.3s, color 0.3s; z-index: 10000;
@@ -255,8 +263,8 @@
         .btn-tg:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(42, 171, 238, 0.3); }
         .btn-wa { background: #25D366; }
         .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
-        .btn-wb { background: #cb11ab; }
-        .btn-wb:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(203, 17, 171, 0.3); }
+        .btn-max { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-max:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); border-color: #fff; }
 
         .brief-input {
             width: 100%; padding: 12px 15px; margin-top: 12px;
@@ -266,7 +274,7 @@
         }
         .brief-input:focus { border-color: var(--accent); }
         
-        .brief-buttons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 1.5rem; }
+        .brief-buttons-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 1.5rem; }
 
         .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
         .custom-cb { display: flex; align-items: flex-start; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: color 0.3s; }
@@ -297,7 +305,6 @@
             .cta-btn[href="#contacts"] { padding: 0.5rem 1rem; font-size: 0.8rem; flex-shrink: 0; }
             section { padding: 3rem 1rem; }
             .hero { padding-top: 7rem; padding-bottom: 2rem; text-align: center; }
-            /* ИСПРАВЛЕНИЕ: Меньший шрифт для Андроида на мобильных, чтобы влезало слово ПРОФЕССИОНАЛЬНЫЙ */
             h1 { font-size: clamp(1.6rem, 8vw, 2.2rem); text-align: center; }
             .hero p { font-size: 1.05rem; text-align: center; padding: 0 0.5rem; }
             h2 { font-size: 1.8rem; text-align: center; margin-bottom: 2rem; }
@@ -310,7 +317,6 @@
             .modal-content.brief-content { text-align: left; padding: 1.5rem 1rem; }
             .checkbox-group { grid-template-columns: 1fr; gap: 12px; }
             .brief-buttons-grid { grid-template-columns: 1fr; gap: 10px; } 
-            /* ИСПРАВЛЕНИЕ: Крестик на мобильных тоже СЛЕВА ВВЕРХУ */
             .video-close { top: max(15px, env(safe-area-inset-top)); left: max(15px, env(safe-area-inset-left)); width: 40px; height: 40px; font-size: 2rem; }
             .scroll-top-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; }
         }
@@ -327,7 +333,6 @@
 
     <main>
         <section class="hero">
-            <!-- ИЗМЕНЕНО ДЛЯ SEO: SEO-заглушки для поисковиков (скрипт их заменит при загрузке для пользователя) -->
             <h1 id="dyn-hero-title">Профессиональный продакшн видео и рекламных роликов</h1>
             <p id="dyn-hero-subtitle">Создание коммерческой анимации, видео для маркетплейсов и контента, который увеличивает продажи.</p>
             
@@ -372,6 +377,7 @@
         </div>
     </div>
 
+    <!-- ИЗМЕНЕНО: Модалка контактов -->
     <div id="contact-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
@@ -380,7 +386,7 @@
             
             <a href="tg://resolve?domain=mikerover" class="social-btn btn-tg">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"/></svg>
-                <span>@mikerover</span>
+                <span>Telegram</span>
             </a>
             
             <a href="https://wa.me/79174489817" target="_blank" class="social-btn btn-wa">
@@ -388,13 +394,14 @@
                 <span>WhatsApp</span>
             </a>
             
-            <button class="social-btn btn-wb copy-wb" style="font-size: 0.95rem; margin-top: 10px;">
-                <svg viewBox="0 0 24 24" font-family="sans-serif"><circle cx="12" cy="12" r="11" fill="white" fill-opacity="0.2"/><text x="12" y="16.5" font-size="12" fill="white" font-weight="900" text-anchor="middle">WB</text></svg>
-                <span>Скопировать ссылку</span>
-            </button>
+            <a href="https://max.ru/channel_videogift" target="_blank" class="social-btn btn-max" style="margin-top: 10px;">
+                <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="none" stroke="white" stroke-width="2"/><path d="M7 16V8l5 5 5-5v8" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+                <span>MAX</span>
+            </a>
         </div>
     </div>
 
+    <!-- ИЗМЕНЕНО: Модалка Брифа -->
     <div id="brief-modal" class="modal-overlay">
         <div class="modal-content brief-content">
             <button class="modal-close">&times;</button>
@@ -446,6 +453,10 @@
                     <button class="social-btn btn-wa" onclick="submitBrief('wa')" style="margin-top:0;">
                         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                         <span>WhatsApp</span>
+                    </button>
+                    <button class="social-btn btn-max" onclick="submitBrief('max')" style="margin-top:0;">
+                        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="none" stroke="white" stroke-width="2"/><path d="M7 16V8l5 5 5-5v8" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+                        <span>MAX</span>
                     </button>
                 </div>
             </div>
@@ -588,17 +599,6 @@
         const closeBtn = modal.querySelector('.modal-close');
         if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-        
-        const copyWbBtn = document.querySelector('.copy-wb');
-        if(copyWbBtn) {
-            copyWbBtn.addEventListener('click', () => {
-                const link = "tg://resolve?domain=mikerover"; 
-                const textArea = document.createElement("textarea");
-                textArea.value = link; document.body.appendChild(textArea); textArea.select();
-                try { document.execCommand('copy'); alert('Ссылка скопирована!'); } catch (err) {}
-                document.body.removeChild(textArea);
-            });
-        }
     }
 
     function setupBriefModal() {
@@ -619,6 +619,7 @@
         scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
     }
 
+    /* ИЗМЕНЕНО: Логика отправки брифа для MAX (без алерта, мгновенный переход) */
     window.submitBrief = function(platform) {
         const getCheckedValues = (name) => {
             return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(', ');
@@ -636,11 +637,14 @@
         if(budget) rawText += "\n4. Бюджет/Референс: " + budget;
         if (!format && !goal && !placement && !budget) rawText = "Здравствуйте! Хочу обсудить видеопроект.";
 
-        if (platform === 'wb') {
+        if (platform === 'max') {
             const textArea = document.createElement("textarea");
             textArea.value = rawText; document.body.appendChild(textArea); textArea.select();
-            try { document.execCommand('copy'); alert('Готовый текст заявки скопирован! Теперь просто нажмите "Вставить" в чате на Wildberries.'); } catch (err) {}
+            try { 
+                document.execCommand('copy'); 
+            } catch (err) {}
             document.body.removeChild(textArea);
+            window.open('https://max.ru/channel_videogift', '_blank');
         } else {
             let encodedText = encodeURIComponent(rawText);
             if (platform === 'tg') window.location.href = `tg://resolve?domain=mikerover&text=${encodedText}`;
