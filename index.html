@@ -91,7 +91,7 @@
         }
 
         main { padding-top: 100px; }
-        section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+        section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; scroll-margin-top: 110px; }
 
         .hero { text-align: center; position: relative; padding-top: 6rem; padding-bottom: 4rem; }
         
@@ -653,12 +653,31 @@
         document.getElementById('brief-modal').classList.remove('active');
     };
 
+    /* Переход к разделу из ссылки (например #portfolio).
+       Работы подгружаются файлом content.json уже после открытия страницы,
+       поэтому обычный переход по якорю срабатывает слишком рано.
+       Здесь дожидаемся содержимого и прокручиваем ещё раз. */
+    function scrollToHashAfterLoad() {
+        if (!location.hash) return;
+        let target = null;
+        try {
+            target = document.querySelector(location.hash);
+        } catch (e) {
+            return;
+        }
+        if (!target) return;
+        const move = () => target.scrollIntoView({ block: 'start' });
+        requestAnimationFrame(() => requestAnimationFrame(move));
+        setTimeout(move, 350);
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
         await loadContent();
         setupContactModal();
         setupBriefModal();
         setupVideoModal();
         setupScrollToTop();
+        scrollToHashAfterLoad();
     });
 </script>
 </body>
