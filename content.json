@@ -120,6 +120,13 @@
 "orientation": "horizontal"
 },
 {
+"title": "Промо для бутика мужского парфюма",
+"description": "Промо ролик для бутика, продающего мужской парфюм.",
+"video_url": "savage.mp4",
+"thumbnail": "img/savage.png",
+"orientation": "vertical"
+},
+{
 "title": "Smart Watch",
 "description": "Промовидео умных часов для интернет-магазина.",
 "video_url": "smartwatch.mp4",
