@@ -156,6 +156,18 @@
         .service-card h3 { font-size: 1.25rem; margin-bottom: 1rem; color: #ffffff; }
         .service-card p { color: var(--text-muted); font-size: 0.95rem; }
 
+        /* Кликабельные карточки направлений */
+        .service-card.dir { cursor: pointer; text-decoration: none; color: inherit; display: block; border-color: rgba(139, 92, 246, 0.45); }
+        .service-card.dir:hover { border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
+        .dir-ico { font-size: 2.5rem; margin-bottom: 10px; }
+        .dir-btn {
+            display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.1rem;
+            background: var(--accent); color: #fff; font-weight: 600; font-size: 0.95rem;
+            padding: 0.6rem 1.35rem; border-radius: 50px;
+            box-shadow: 0 0 18px var(--accent-glow); transition: transform .3s, box-shadow .3s;
+        }
+        .service-card.dir:hover .dir-btn { transform: translateY(-2px); box-shadow: 0 0 28px var(--accent-glow); }
+
         .portfolio-item {
             border-radius: 12px; overflow: hidden; background: var(--card-bg);
             border: 1px solid var(--border-color); text-decoration: none; color: inherit;
@@ -724,15 +736,17 @@
         <section id="napravleniya">
             <h2>Направления</h2>
             <div class="services-grid">
-                <a href="reklamnyj-rolik/" class="service-card" style="text-decoration: none; color: inherit; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🎯</div>
+                <a href="reklamnyj-rolik/" class="service-card dir">
+                    <div class="dir-ico">🎯</div>
                     <h3>Рекламный ролик</h3>
-                    <p>Создание рекламных видео для бизнеса: Reels, сюжетные промо и видео для маркетплейсов. Подробнее →</p>
+                    <p>Создание рекламных видео для бизнеса: Reels, сюжетные промо и видео для маркетплейсов.</p>
+                    <span class="dir-btn">Подробнее →</span>
                 </a>
-                <a href="video-dlya-wildberries/" class="service-card" style="text-decoration: none; color: inherit; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🛍️</div>
+                <a href="video-dlya-wildberries/" class="service-card dir">
+                    <div class="dir-ico">🛍️</div>
                     <h3>Анимированная обложка для маркетплейсов</h3>
-                    <p>Видеообложка и видео для карточки товара на Wildberries и OZON: инфографика, карусель из фото. Подробнее →</p>
+                    <p>Видеообложка и видео для карточки товара на Wildberries и OZON: инфографика, карусель из фото.</p>
+                    <span class="dir-btn">Подробнее →</span>
                 </a>
             </div>
         </section>
