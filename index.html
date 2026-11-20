@@ -711,7 +711,7 @@
         <section class="hero">
             <h1 id="dyn-hero-title">Профессиональный продакшн видео и рекламных роликов</h1>
             <p id="dyn-hero-subtitle">Создание коммерческой анимации, видео для маркетплейсов и контента, который увеличивает продажи.</p>
-            <p class="hero-intro" style="max-width: 760px; margin: 1rem auto 0; color: var(--text-muted); line-height: 1.6;">Создаю рекламные ролики, коммерческую анимацию и видео для карточек товаров: от коротких вертикальных Reels до сюжетных промо и презентаций. Веду проект от идеи и сценария до готового файла с озвучкой.</p>
+            <p class="hero-intro" style="max-width: 760px; margin: 1rem auto 0; color: var(--text-muted); line-height: 1.6;">Создаю рекламные ролики, коммерческую анимацию и видео для карточек товаров: от коротких вертикальных Reels до сюжетных промо и презентаций. Веду проект от идеи и сценария до готового файла с озвучкой.<div><br></div><div><br></div></p>
             
             <div class="hero-buttons">
                 <button class="cta-btn outline" onclick="document.getElementById('brief-modal').classList.add('active')">Запросить стоимость</button>
@@ -947,7 +947,7 @@
                 </div>
                 <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.3rem;">
                     <h3 style="margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--text-main);">Как проходит оплата?</h3>
-                    <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Оплата безопасная — через сервис Robokassa, предоставляется чек.</p>
+                    <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Оплата безопасная — 100%, через сервис Robokassa, предоставлю чек.</p>
                 </div>
             </div>
         </section>
@@ -1012,11 +1012,16 @@
             <div style="text-align: left; margin-bottom: 15px;">
                 <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">1. Формат видео</label>
                 <div class="checkbox-group" style="">
-                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Рекламный ролик"><span class="cb-box"></span>Рекламный ролик</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Маркетплейсы"><span class="cb-box"></span>Маркетплейсы</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Reels / Shorts"><span class="cb-box"></span>Reels / Shorts</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-format" value="Обзор / Презентация"><span class="cb-box"></span>Обзор / Презентация</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-format" value="9:16 или 16:9"><span class="cb-box"></span>9:16 или 16:9</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Рекламный ролик"><span class="cb-box"></span>Рекламный ролик</label>
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="9:16"><span class="cb-box"></span>9:16</label>
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="16:9"><span class="cb-box"></span>16:9</label>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Маркетплейсы"><span class="cb-box"></span>Маркетплейсы</label>
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Reels / Shorts"><span class="cb-box"></span>Reels / Shorts</label>
+                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Обзор / Презентация"><span class="cb-box"></span>Обзор / Презентация</label>
+                    </div>
                 </div>
             </div>
 
@@ -1282,6 +1287,7 @@
         scrollToHashAfterLoad();
     });
 </script>
+
 
 
 
