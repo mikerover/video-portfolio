@@ -123,6 +123,24 @@
         .scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         .scroll-top-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--accent-glow); }
         @media (max-width: 640px) { .scroll-top-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; } }
+        /* Контактный раздел открывается как окно поверх страницы */
+        .contact-close {
+            display: none; position: absolute; top: 14px; right: 14px;
+            width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.45);
+            background: rgba(255,255,255,.15); color: #fff; font-size: 1.7rem; line-height: 1;
+            align-items: center; justify-content: center; cursor: pointer; z-index: 10001;
+            -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            transition: background .25s ease, border-color .25s ease, transform .25s ease;
+        }
+        .contact-close:hover { background: var(--accent); border-color: transparent; transform: scale(1.06); }
+        body.contact-open { overflow: hidden; }
+        body.contact-open #contact {
+            position: fixed; inset: 0; z-index: 9998; max-width: none; margin: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            background: rgba(0,0,0,.94); overflow-y: auto;
+            padding: 4.5rem 1.2rem 2rem;
+        }
+        body.contact-open #contact .contact-close { display: flex; }
         .faq { display: grid; gap: 1rem; max-width: 860px; margin: 0 auto; }
         .qa { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.3rem; }
         .qa h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
@@ -422,6 +440,7 @@
         </section>
 
         <section id="contact">
+            <button class="contact-close" type="button" aria-label="Закрыть">&times;</button>
             <h2>Обсудим видео для вашего товара</h2>
             <p class="lead" style="text-align: center; margin-bottom: 1.5rem;">Напишите в удобный мессенджер — пришлите ссылку на товар, обсудим идею и сроки.</p>
             <div class="contact-buttons">
@@ -515,6 +534,24 @@
         window.addEventListener('scroll', upd, { passive: true });
         upd();
         b.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+    </script>
+
+    <script>
+    (function () {
+        var sec = document.getElementById('contact');
+        if (!sec) return;
+        function openC() { document.body.classList.add('contact-open'); document.body.style.overflow = 'hidden'; }
+        function closeC() { document.body.classList.remove('contact-open'); document.body.style.overflow = ''; }
+        document.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+            a.addEventListener('click', function (e) { e.preventDefault(); openC(); });
+        });
+        var cc = sec.querySelector('.contact-close');
+        if (cc) cc.addEventListener('click', closeC);
+        sec.addEventListener('click', function (e) { if (e.target === sec) closeC(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && document.body.classList.contains('contact-open')) closeC();
+        });
     })();
     </script>
 
