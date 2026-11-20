@@ -299,10 +299,11 @@
         .custom-cb:hover { color: white; }
         .custom-cb input { display: none; }
         .cb-box {
-            width: 18px; height: 18px; border: 1px solid var(--border-color); border-radius: 4px; 
-            margin-right: 8px; margin-top: 2px; display: inline-flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.4); transition: all 0.2s; flex-shrink: 0;
+            width: 20px; height: 20px; border: 2px solid rgba(255,255,255,.5); border-radius: 5px;
+            margin-right: 9px; margin-top: 1px; display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,.07); transition: all 0.2s; flex-shrink: 0;
         }
+        .custom-cb:hover .cb-box { border-color: rgba(255,255,255,.85); background: rgba(255,255,255,.14); }
         .custom-cb input:checked + .cb-box { background: var(--accent); border-color: var(--accent); }
         .custom-cb input:checked + .cb-box::after { content: '✓'; color: white; font-size: 12px; }
 
@@ -711,7 +712,7 @@
         <section class="hero">
             <h1 id="dyn-hero-title">Профессиональный продакшн видео и рекламных роликов</h1>
             <p id="dyn-hero-subtitle">Создание коммерческой анимации, видео для маркетплейсов и контента, который увеличивает продажи.</p>
-            <p class="hero-intro" style="max-width: 760px; margin: 1rem auto 0; color: var(--text-muted); line-height: 1.6;">Создаю рекламные ролики, коммерческую анимацию и видео для карточек товаров: от коротких вертикальных Reels до сюжетных промо и презентаций. Веду проект от идеи и сценария до готового файла с озвучкой.<div><br></div><div><br></div></p>
+            <p class="hero-intro" style="max-width: 760px; margin: 1rem auto 0; color: var(--text-muted); line-height: 1.6;">Создаю рекламные ролики, коммерческую анимацию и видео для карточек товаров: от коротких вертикальных Reels до сюжетных промо и презентаций. Веду проект от идеи и сценария до готового файла с озвучкой.</p><div><br></div><div><br></div><p></p>
             
             <div class="hero-buttons">
                 <button class="cta-btn outline" onclick="document.getElementById('brief-modal').classList.add('active')">Запросить стоимость</button>
@@ -1007,47 +1008,45 @@
         <div class="modal-content brief-content" style="transition: none;">
             <button class="modal-close">×</button>
             <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #fff; text-transform: uppercase; letter-spacing: 1px;">БРИФ</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Ответьте на 4 вопроса для точной оценки стоимости проекта.</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Ответьте на 4 вопроса для визуального понимания и оценки стоимости проекта.</p>
             
             <div style="text-align: left; margin-bottom: 15px;">
                 <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">1. Формат видео</label>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0 0 4px;">Можно отметить несколько пунктов&nbsp; в каждой категории.</p>
                 <div class="checkbox-group" style="">
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Рекламный ролик"><span class="cb-box"></span>Рекламный ролик</label>
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="9:16"><span class="cb-box"></span>9:16</label>
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="16:9"><span class="cb-box"></span>16:9</label>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Маркетплейсы"><span class="cb-box"></span>Маркетплейсы</label>
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Reels / Shorts"><span class="cb-box"></span>Reels / Shorts</label>
-                        <label class="custom-cb"><input type="checkbox" name="b-format" value="Обзор / Презентация"><span class="cb-box"></span>Обзор / Презентация</label>
-                    </div>
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="9:16"><span class="cb-box"></span>9:16&nbsp; вертикальный</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-format" value="16:9"><span class="cb-box"></span>16:9&nbsp; горизонтальный</label>
                 </div>
             </div>
 
             <div style="text-align: left; margin-bottom: 15px;">
-                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">2. Цели и задачи</label>
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">2. Длительность</label>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0 0 4px;">Можно отметить несколько пунктов или все сразу.</p>
                 <div class="checkbox-group" style="">
-                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Увеличение продаж"><span class="cb-box"></span>Увеличение продаж</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Узнаваемость бренда"><span class="cb-box"></span>Узнаваемость бренда</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Инструкция / Обучение"><span class="cb-box"></span>Инструкция / Обучение</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="Привлечение аудитории"><span class="cb-box"></span>Привлечение аудитории</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="10 секунд"><span class="cb-box"></span>10 секунд</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="15 секунд"><span class="cb-box"></span>15 секунд</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="20 секунд"><span class="cb-box"></span>20 секунд</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-goal" value="30 секунд"><span class="cb-box"></span>30 секунд</label>
                 </div>
             </div>
 
             <div style="text-align: left; margin-bottom: 15px;">
-                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">3. Где будет размещаться?</label>
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">3. Визуальное и аудио наполнение ролика</label>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0 0 4px;">Можно отметить несколько пунктов или все сразу.</p>
                 <div class="checkbox-group" style="">
-                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="WB / Ozon"><span style="background-color: rgb(139, 92, 246);"><br></span><br></label>
-                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="YouTube"><span class="cb-box"></span>YouTube</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="Telegram / VK / Reels"><span class="cb-box"></span>Telegram / VK / Reels</label>
-                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="Сайт компании"><span class="cb-box"></span>Сайт компании</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="озвучка голосом"><span class="cb-box"></span>озвучка голосом</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="текст/титры"><span class="cb-box"></span>текст/титры</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="инфографика" checked=""><span class="cb-box"></span>инфографика</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="мужской голос"><span class="cb-box"></span>мужской голос</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="женский голос" checked=""><span class="cb-box"></span>женский голос</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="музыкальный трек"><span class="cb-box"></span>музыкальный трек</label>
+                    <label class="custom-cb"><input type="checkbox" name="b-placement" value="звуковые эффекты" checked=""><span class="cb-box"></span>звуковые эффекты</label>
                 </div>
             </div>
 
             <div style="text-align: left; margin-bottom: 15px;">
-                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">4. Примерный бюджет и ссылки на референсы (если есть)</label>
-                <input type="text" id="b-budget" class="brief-input" style="margin-top: 0;" placeholder="Например: 1000 рублей, хочу как в видео... (ссылка)">
+                <label style="color: #fff; font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 5px;">4. Ссылки на 1-2 референса (если есть)</label>
+                <input type="text" id="b-budget" class="brief-input" style="margin-top: 0;" placeholder="Например: ссылка на видео, которое нравится">
             </div>
             
             <div style="margin-top: 1.5rem;">
@@ -1239,9 +1238,9 @@
         
         let rawText = "Здравствуйте! Направляю заполненный БРИФ:\n";
         if(format) rawText += "\n1. Формат видео: " + format;
-        if(goal) rawText += "\n2. Цели и задачи: " + goal;
-        if(placement) rawText += "\n3. Где размещаем: " + placement;
-        if(budget) rawText += "\n4. Бюджет/Референс: " + budget;
+        if(goal) rawText += "\n2. Длительность: " + goal;
+        if(placement) rawText += "\n3. Визуальное и аудио наполнение: " + placement;
+        if(budget) rawText += "\n4. Референсы: " + budget;
         if (!format && !goal && !placement && !budget) rawText = "Здравствуйте! Хочу обсудить видеопроект.";
 
         if (platform === 'max') {
@@ -1287,6 +1286,10 @@
         scrollToHashAfterLoad();
     });
 </script>
+
+
+
+
 
 
 
