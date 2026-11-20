@@ -125,7 +125,7 @@
         @media (max-width: 640px) { .scroll-top-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; } }
         /* Контактный раздел открывается как окно поверх страницы */
         .contact-close {
-            display: none; position: absolute; top: 14px; right: 14px;
+            display: none; position: absolute; top: max(14px, env(safe-area-inset-top)); left: max(14px, env(safe-area-inset-left));
             width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.45);
             background: rgba(255,255,255,.15); color: #fff; font-size: 1.7rem; line-height: 1;
             align-items: center; justify-content: center; cursor: pointer; z-index: 10001;
