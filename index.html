@@ -1282,7 +1282,7 @@
                 document.execCommand('copy'); 
             } catch (err) {}
             document.body.removeChild(textArea);
-            window.open('https://max.ru/u/f9LHodD0cOIXIqi9L-LMBmgrI_5d2UkaVyk4bgjFroqLwUsCbiLXOSeGe2k', '_blank');
+            window.open(maxUrl('https://max.ru/u/f9LHodD0cOIXIqi9L-LMBmgrI_5d2UkaVyk4bgjFroqLwUsCbiLXOSeGe2k'), '_blank');
         } else {
             let encodedText = encodeURIComponent(rawText);
             if (platform === 'tg') window.location.href = `tg://resolve?domain=mikerover&text=${encodedText}`;
@@ -1317,13 +1317,18 @@
         setupScrollToTop();
         scrollToHashAfterLoad();
     });
+
+    /* iPhone и iPad: MAX без установленного приложения не открывается,
+       а max.ru пытается запустить приложение и Safari выдаёт ошибку.
+       Поэтому на iOS ведём в веб-версию MAX. */
+    window.maxUrl = function (url) {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        return isIOS ? url.replace('https://max.ru/', 'https://web.max.ru/') : url;
+    };
+
+    document.querySelectorAll('a[href^="https://max.ru/u/"]').forEach((a) => {
+        a.href = window.maxUrl(a.href);
+    });
 </script>
-
-
-
-
-
-
-
-
 </body></html>

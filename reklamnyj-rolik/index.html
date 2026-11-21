@@ -592,4 +592,16 @@
 
 
 
+    <script>
+    /* iPhone и iPad: MAX без приложения не открывается — ведём в веб-версию */
+    (function () {
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (!isIOS) return;
+        document.querySelectorAll('a[href^="https://max.ru/u/"]').forEach(function (a) {
+            a.href = a.href.replace('https://max.ru/', 'https://web.max.ru/');
+        });
+    })();
+    </script>
+
 </body></html>
