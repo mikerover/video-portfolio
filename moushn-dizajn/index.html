@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моушн-дизайн на заказ — анимация для рекламы и бизнеса</title>
+    <meta name="description" content="Моушн-дизайн на заказ: анимация логотипа, инфографика, объясняющие и рекламные ролики. Идея, раскадровка, анимация и озвучка — под ключ. Без съёмки.">
+    <meta name="keywords" content="моушн-дизайн на заказ, анимация логотипа, инфографика, объясняющее видео, анимационный ролик, motion design, анимация для рекламы">
+    <meta name="author" content="mbadun">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://mikerover.github.io/video-portfolio/moushn-dizajn/">
+
+    <meta property="og:title" content="Моушн-дизайн на заказ — анимация для рекламы и бизнеса">
+    <meta property="og:description" content="Анимация логотипа, инфографика, объясняющие и рекламные ролики. Идея, раскадровка, анимация и озвучка — под ключ.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mikerover.github.io/video-portfolio/moushn-dizajn/">
+    <meta property="og:image" content="https://mikerover.github.io/video-portfolio/logo.png">
+    <meta property="og:site_name" content="mbadun видеограф">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&amp;display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --main-font: 'Inter', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+        body {
+            background-color: var(--bg-dark); color: var(--text-main);
+            font-family: var(--main-font); line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        header {
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(9, 9, 11, 0.9);
+            position: sticky; top: 0; width: 100%; z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        nav {
+            max-width: 1100px; margin: 0 auto; padding: 0.8rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+        }
+        .logo-glow { height: 56px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); }
+        main { padding-top: 1rem; }
+        section { max-width: 1100px; margin: 0 auto; padding: 3.5rem 1.5rem; }
+        .hero { text-align: center; position: relative; padding-top: 4rem; padding-bottom: 2rem; }
+        .hero::before {
+            content: ''; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            width: 520px; height: 520px; max-width: 100%; z-index: -1; pointer-events: none;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 65%);
+        }
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1.12; margin-bottom: 1.2rem;
+            font-weight: 800; overflow-wrap: break-word; hyphens: auto;
+        }
+        .lead { color: var(--text-muted); font-size: 1.15rem; max-width: 720px; margin: 0 auto 1rem; }
+        h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 2rem; text-align: center; font-weight: 700; }
+        h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 1.5rem; border-radius: 16px; transition: transform .3s, border-color .3s;
+        }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+        .step { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; }
+        .step .num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; border-radius: 50%; background: var(--accent);
+            color: #fff; font-weight: 700; margin-bottom: 0.8rem;
+        }
+        .step p { color: var(--text-muted); font-size: 0.95rem; }
+        .works { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+        .work {
+            border-radius: 12px; overflow: hidden; background: var(--card-bg);
+            border: 1px solid var(--border-color); text-decoration: none; color: inherit;
+            display: block; transition: transform .3s, border-color .3s;
+        }
+        .work:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .work img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color); }
+        .work .wc { padding: 1.1rem 1.3rem; }
+        .work .wc h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+        .work .wc p { color: var(--text-muted); font-size: 0.9rem; }
+        /* Модальное окно с видео */
+        .wk-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.94);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity .25s ease;
+            z-index: 9999; padding: 1rem;
+        }
+        .wk-overlay.active { opacity: 1; pointer-events: auto; }
+        .wk-video-box { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .wk-video-box video {
+            max-width: 100%; max-height: 100%; border-radius: 12px;
+            background: #000; box-shadow: 0 20px 60px rgba(0,0,0,.6);
+        }
+        .wk-close {
+            position: fixed; top: max(16px, env(safe-area-inset-top)); left: max(16px, env(safe-area-inset-left));
+            width: 50px; height: 50px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.45);
+            background: rgba(255,255,255,.15); color: #fff; font-size: 1.9rem; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10001; transition: background .25s ease;
+            -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+        }
+        .wk-close:hover { background: var(--accent); }
+        body.wk-open > *:not(#wk-modal):not(script) { display: none; }
+        .scroll-top-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--accent); color: white; border: none; border-radius: 50%;
+            cursor: pointer; box-shadow: 0 4px 15px var(--accent-glow);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; z-index: 90;
+        }
+        .scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .scroll-top-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--accent-glow); }
+        @media (max-width: 640px) { .scroll-top-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; } }
+        /* Контактный раздел открывается как окно поверх страницы */
+        .contact-close {
+            display: none; position: absolute; top: max(14px, env(safe-area-inset-top)); left: max(14px, env(safe-area-inset-left));
+            width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.45);
+            background: rgba(255,255,255,.15); color: #fff; font-size: 1.7rem; line-height: 1;
+            align-items: center; justify-content: center; cursor: pointer; z-index: 10001;
+            -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            transition: background .25s ease, border-color .25s ease, transform .25s ease;
+        }
+        .contact-close:hover { background: var(--accent); border-color: transparent; transform: scale(1.06); }
+        body.contact-open { overflow: hidden; }
+        body.contact-open #contact {
+            position: fixed; inset: 0; z-index: 9998; max-width: none; margin: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            background: rgba(0,0,0,.94); overflow-y: auto;
+            padding: 4.5rem 1.2rem 2rem;
+        }
+        body.contact-open #contact .contact-close { display: flex; }
+        .faq { display: grid; gap: 1rem; max-width: 860px; margin: 0 auto; }
+        .qa { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.3rem; }
+        .qa h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .qa p { color: var(--text-muted); font-size: 0.95rem; }
+        .cta-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--accent); color: #fff; padding: 1rem 2.2rem; border-radius: 50px;
+            text-decoration: none; font-weight: 600; transition: all .3s ease;
+            box-shadow: 0 0 25px var(--accent-glow); border: none; cursor: pointer; font-family: inherit; font-size: 1rem;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px var(--accent-glow); }
+        .cta-btn.outline { background: transparent; border: 2px solid var(--accent); box-shadow: none; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+        .contact-buttons { max-width: 420px; margin: 0 auto; }
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            color: #fff; padding: 1rem 1.5rem; border-radius: 12px; text-decoration: none;
+            font-weight: 600; font-size: 1.05rem; margin-top: 10px;
+            transition: transform .3s, box-shadow .3s; width: 100%;
+        }
+        .social-btn svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
+        .btn-tg { background: #2AABEE; }
+        .btn-tg:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(42,171,238,0.3); }
+        .btn-wa { background: #25D366; }
+        .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37,211,102,0.3); }
+        .btn-max { background: linear-gradient(135deg, #00BFFF 0%, #471AFF 55%, #9500FF 100%); border: none; }
+        .btn-max:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(71,26,255,0.45); }
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 1.5rem; text-align: center; color: var(--text-muted); }
+        footer a { color: var(--accent); text-decoration: none; }
+        .breadcrumbs { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.5rem 0; color: var(--text-muted); font-size: 0.85rem; }
+        .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+        .breadcrumbs a:hover { color: #fff; }
+        @media (max-width: 640px) {
+            .hero-buttons { flex-direction: column; }
+            .hero-buttons .cta-btn { width: 100%; }
+            section { padding: 2.5rem 1.1rem; }
+        }
+    </style>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://mikerover.github.io/video-portfolio/moushn-dizajn/#service",
+      "name": "Моушн-дизайн",
+      "serviceType": "Моушн-дизайн и анимационная графика",
+      "description": "Моушн-дизайн для бизнеса: анимация логотипа, инфографика, титры, объясняющие и рекламные ролики. Идея, сценарий, раскадровка, анимация и озвучка под ключ.",
+      "url": "https://mikerover.github.io/video-portfolio/moushn-dizajn/",
+      "provider": {
+        "@id": "https://mikerover.github.io/video-portfolio/#studio"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Россия"
+      },
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "priceCurrency": "RUB",
+        "url": "https://mikerover.github.io/video-portfolio/moushn-dizajn/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Что такое моушн-дизайн?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Это анимированная графика: логотип, тексты, инфографика и элементы интерфейса, которые двигаются в кадре. Такой ролик объясняет продукт или услугу без съёмки."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько стоит моушн-дизайн?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Стоимость зависит от длительности, сложности анимации и объёма графики. Точную цену называю после обсуждения задачи — напишите в мессенджер или заполните бриф."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько времени занимает работа?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Небольшой ролик — обычно один день, более сложный — до двух дней. Точный срок называю после обсуждения идеи и хронометража."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужна ли съёмка?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет. Моушн-дизайн собирается из графики, анимации и ваших материалов: логотипа, фото, текстов и фирменных цветов."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Что нужно для старта?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Логотип, тексты и, если есть, фото продукта или брендбук. Если материалов нет — предложу решение на основе вашей задачи."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "В каком формате я получу видео?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Готовый ролик отдаю файлом MP4 в вертикальном или горизонтальном формате. Он подходит для соцсетей, сайта, презентаций и рекламы."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли внести правки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Показываю черновой вариант, обсуждаем замечания и вносим правки, чтобы ролик точно решал задачу."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как проходит оплата?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Оплата безопасная — через сервис Robokassa, предоставляется чек."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "https://mikerover.github.io/video-portfolio/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Моушн-дизайн",
+          "item": "https://mikerover.github.io/video-portfolio/moushn-dizajn/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="../" aria-label="На главную">
+                <img src="../logo.png" alt="Логотип mbadun видеограф" class="logo-glow">
+            </a>
+            <a href="#contact" class="cta-btn" style="padding: 0.6rem 1.4rem; font-size: 0.9rem;">Связаться</a>
+        </nav>
+    </header>
+
+    <div class="breadcrumbs">
+        <a href="../">Главная</a> → Моушн-дизайн
+    </div>
+
+    <main>
+        <section class="hero">
+            <h1>Моушн-дизайн на заказ</h1>
+            <p class="lead">Создаю анимированную графику для рекламы, соцсетей и презентаций: анимацию логотипа, инфографику, титры и объясняющие ролики. Съёмка не нужна — всё рисуется и анимируется, а готовое видео вы получаете файлом MP4.</p>
+            <p class="lead" style="font-size: 1rem;">Работаем онлайн: обсуждаем задачу в мессенджере, показываю черновой вариант, вношу правки и отдаю готовый файл.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="cta-btn">Обсудить задачу</a>
+            </div>
+        </section>
+
+        <section id="formats" style="">
+            <h2>Что можно заказать</h2>
+            <div class="grid">
+                <div class="card" style="">
+                    <h3>Реклама и промо</h3>
+                    <p>Короткие ролики с графикой и текстом для соцсетей и рекламных кампаний.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Анимация логотипа</h3>
+                    <p>Интро, аутро и заставки для видео, сторис и презентаций.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Инфографика и цифры</h3>
+                    <p>Аккуратная подача цифр, преимуществ и характеристик товара.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Объясняющее видео</h3>
+                    <p>Простыми словами о продукте, услуге или процессе — без съёмки.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Титры и типографика</h3>
+                    <p>Динамичные текстовые вставки, субтитры и акценты в кадре.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Анимация для маркетплейсов</h3>
+                    <p>Видеообложки и карточки товара с графикой и подписями.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="where" style="">
+            <h2>Где это работает</h2>
+            <div class="grid">
+                <div class="card" style="">
+                    <h3>Соцсети и Reels</h3>
+                    <p>Вертикальные ролики, которые останавливают прокрутку и легко смотрятся с телефона.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Сайт и лендинги</h3>
+                    <p>Короткое видео на первом экране объясняет продукт быстрее, чем текст.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Презентации и вебинары</h3>
+                    <p>Графика и титры, которые удерживают внимание и помогают донести мысль.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Маркетплейсы</h3>
+                    <p>Анимированная обложка и видео для карточки товара на Wildberries и OZON.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Реклама у блогеров</h3>
+                    <p>Готовый ролик, который можно передать площадке вместе с текстом интеграции.</p>
+                </div>
+                <div class="card" style="">
+                    <h3>Экраны и выставки</h3>
+                    <p>Видео для показа на большом экране в офисе, магазине или на стенде.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" style="">
+            <h2>Как проходит работа</h2>
+            <div class="steps">
+                <div class="step" style="">
+                    <div class="num">1</div>
+                    <h3>Заявка</h3>
+                    <p>Вы описываете задачу и присылаете материалы: логотип, фото, тексты.</p>
+                </div>
+                <div class="step" style="">
+                    <div class="num">2</div>
+                    <h3>Идея и сценарий</h3>
+                    <p>Предлагаю структуру, хронометраж и стиль будущего ролика.</p>
+                </div>
+                <div class="step" style="">
+                    <div class="num">3</div>
+                    <h3>Раскадровка</h3>
+                    <p>Согласуем кадры, тексты и графику до начала анимации.</p>
+                </div>
+                <div class="step" style="">
+                    <div class="num">4</div>
+                    <h3>Анимация</h3>
+                    <p>Собираю ролик, подбираю музыку и озвучку, если она нужна.</p>
+                </div>
+                <div class="step" style="">
+                    <div class="num">5</div>
+                    <h3>Правки и сдача</h3>
+                    <p>Показываю черновик, вношу замечания и отдаю готовый MP4.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="works" style="">
+            <h2>Примеры работ</h2>
+            <div class="works">
+                <a href="../videomarketing.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/videomarketing.png" alt="Моушн-дизайн: графическая презентация услуг" loading="lazy">
+                    <div class="wc"><h3>Видеомаркетинг</h3><p>Графическая презентация услуг для B2B-сегмента.</p></div>
+                </a>
+                <a href="../videomarketing2.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/videomarketing2.png" alt="Моушн-дизайн: проморолик рекламных услуг" loading="lazy">
+                    <div class="wc"><h3>Проморолик рекламных услуг</h3><p>Анимация преимуществ и текстовых акцентов.</p></div>
+                </a>
+                <a href="../jewerly3.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/jewerly3.png" alt="Анимация украшений: свет и блики" loading="lazy">
+                    <div class="wc"><h3>Блеск украшений</h3><p>Свет, блики и анимация продукта.</p></div>
+                </a>
+                <a href="../logistics.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/logistics.png" alt="Моушн-дизайн: акционное видео с графикой" loading="lazy">
+                    <div class="wc"><h3>Логистика</h3><p>Акционное видео с графикой и титрами.</p></div>
+                </a>
+                <a href="../wbkartochka2.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/wbkartochka2.png" alt="Анимация карточки товара для маркетплейса" loading="lazy">
+                    <div class="wc"><h3>Живая карточка товара</h3><p>Инфографика и анимация для карточки на маркетплейсе.</p></div>
+                </a>
+                <a href="../wb/mg1.mp4" class="work" target="_blank" rel="noopener" style="">
+                    <img src="../img/mg1.png" alt="Анимированная обложка: моушн-графика" loading="lazy">
+                    <div class="wc"><h3>Анимированная обложка</h3><p>Моушн-графика для видеообложки товара.</p></div>
+                </a>
+            </div>
+        </section>
+
+        <section id="other" style="">
+            <h2>Другие услуги</h2>
+            <div class="grid">
+                <a href="../reklamnyj-rolik/" class="card" style="text-decoration: none; color: inherit; display: block;">
+                    <h3>Рекламный ролик</h3>
+                    <p>Сюжетные промо и Reels для бизнеса — от идеи до готового файла.</p>
+                    <span style="display: inline-block; margin-top: 0.8rem; color: var(--accent); font-weight: 600;">Подробнее →</span>
+                </a>
+                <a href="../video-dlya-wildberries/" class="card" style="text-decoration: none; color: inherit; display: block;">
+                    <h3>Видео для Wildberries и OZON</h3>
+                    <p>Анимированные обложки и видео для карточек товара с инфографикой.</p>
+                    <span style="display: inline-block; margin-top: 0.8rem; color: var(--accent); font-weight: 600;">Подробнее →</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="faq" style="">
+            <h2>Частые вопросы о моушн-дизайне</h2>
+            <div class="faq">
+                <div class="qa" style="">
+                    <h3>Что такое моушн-дизайн?</h3>
+                    <p>Это анимированная графика: логотип, тексты, инфографика и элементы интерфейса, которые двигаются в кадре. Такой ролик объясняет продукт или услугу без съёмки.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Сколько стоит моушн-дизайн?</h3>
+                    <p>Стоимость зависит от длительности, сложности анимации и объёма графики. Точную цену называю после обсуждения задачи — напишите в мессенджер или заполните бриф.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Сколько времени занимает работа?</h3>
+                    <p>Небольшой ролик — обычно один день, более сложный — до двух дней. Точный срок называю после обсуждения идеи и хронометража.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Нужна ли съёмка?</h3>
+                    <p>Нет. Моушн-дизайн собирается из графики, анимации и ваших материалов: логотипа, фото, текстов и фирменных цветов.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Что нужно для старта?</h3>
+                    <p>Логотип, тексты и, если есть, фото продукта или брендбук. Если материалов нет — предложу решение на основе вашей задачи.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>В каком формате я получу видео?</h3>
+                    <p>Готовый ролик отдаю файлом MP4 в вертикальном или горизонтальном формате. Он подходит для соцсетей, сайта, презентаций и рекламы.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Можно ли внести правки?</h3>
+                    <p>Да. Показываю черновой вариант, обсуждаем замечания и вносим правки, чтобы ролик точно решал задачу.</p>
+                </div>
+                <div class="qa" style="">
+                    <h3>Как проходит оплата?</h3>
+                    <p>Оплата безопасная — через сервис Robokassa, предоставляется чек.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="">
+            <button class="contact-close" type="button" aria-label="Закрыть">×</button>
+            <h2>Обсудим ваш моушн-дизайн</h2>
+            <p class="lead" style="text-align: center; margin-bottom: 1.5rem;">Напишите в удобный мессенджер — обсудим задачу, идею и сроки.</p>
+            <div class="contact-buttons">
+                <a href="https://t.me/mikerover" target="_blank" rel="noopener" class="social-btn btn-tg">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.96 1.25-5.54 3.67-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.38-.49 1.07-.75 4.2-1.83 7-3.04 8.41-3.63 4-.1 4.83.67 4.9 1.05z"></path></svg>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://wa.me/79174489817" target="_blank" rel="noopener" class="social-btn btn-wa">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"></path></svg>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="https://max.ru/u/f9LHodD0cOIXIqi9L-LMBmgrI_5d2UkaVyk4bgjFroqLwUsCbiLXOSeGe2k" target="_blank" rel="noopener" class="social-btn btn-max">
+                    <svg viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="white" d="M38.0679 0.196289C58.7196 0.196289 74.9143 16.9481 74.9143 37.6106C74.9143 58.2731 58.2054 74.6177 38.2661 74.6177C31.1893 74.6177 27.7607 73.6213 22.2375 69.7106C21.8571 69.4427 21.3375 69.5124 21.0161 69.8552C16.7679 74.3874 5.8875 77.5695 5.38929 71.382C5.38929 60.5927 0 53.5856 0 37.407C0 16.1659 17.4161 0.196289 38.0679 0.196289ZM38.6464 18.6088C28.8482 18.0945 21.1982 24.8981 19.5107 35.5374C18.1125 44.3499 20.5875 55.0909 22.7089 55.632C23.6089 55.8624 25.7679 54.207 27.3429 52.7231C27.6375 52.4445 28.0875 52.3963 28.4304 52.6106C30.8839 54.1106 33.6589 55.2356 36.7179 55.3963C46.7786 55.9213 55.6929 48.0463 56.2232 37.9856C56.7482 27.9249 48.7071 19.1284 38.6464 18.6034V18.6088Z"></path></svg>
+                    <span>MAX</span>
+                </a>
+            </div>
+            <p class="lead" style="font-size: 0.9rem; text-align: center; margin-top: 1.5rem;">Юридическим лицам и ИП — предоставлю чек на услуги.</p>
+            <p class="lead" style="font-size: 0.9rem; text-align: center; margin-top: 0.5rem;">Оплата безопасная — через сервис Robokassa, предоставлю чек.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© <span id="year">2026</span> mbadun видеограф. <a href="../">На главную</a> · <a href="../oferta.html">Публичная оферта</a></p>
+    </footer>
+
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+    <div id="wk-modal" class="wk-overlay" aria-hidden="true" role="dialog" aria-label="Просмотр видео">
+        <button class="wk-close" type="button" aria-label="Закрыть видео">×</button>
+        <div class="wk-video-box">
+            <video id="wk-player" controls="" playsinline="" webkit-playsinline="" preload="metadata"></video>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        var modal = document.getElementById('wk-modal');
+        var player = document.getElementById('wk-player');
+        if (!modal || !player) return;
+        var closeBtn = modal.querySelector('.wk-close');
+        var box = modal.querySelector('.wk-video-box');
+
+        function open(src) {
+            player.src = src;
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('wk-open');
+            document.body.style.overflow = 'hidden';
+            var p = player.play();
+            if (p && p.catch) p.catch(function () {});
+        }
+        function close() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('wk-open');
+            document.body.style.overflow = '';
+            try { player.pause(); } catch (e) {}
+            player.removeAttribute('src');
+            player.load();
+        }
+
+        document.querySelectorAll('.work').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                var href = a.getAttribute('href') || '';
+                if (href.indexOf('.mp4') === -1) return;
+                e.preventDefault();
+                open(href);
+            });
+        });
+        closeBtn.addEventListener('click', close);
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal || e.target === box) close();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) close();
+        });
+    })();
+    </script>
+
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Наверх" aria-label="Наверх">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <script>
+    (function () {
+        var b = document.getElementById('scrollTopBtn');
+        if (!b) return;
+        function upd() { if (window.scrollY > 300) b.classList.add('visible'); else b.classList.remove('visible'); }
+        window.addEventListener('scroll', upd, { passive: true });
+        upd();
+        b.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+    </script>
+
+    <script>
+    (function () {
+        var sec = document.getElementById('contact');
+        if (!sec) return;
+        function openC() { document.body.classList.add('contact-open'); document.body.style.overflow = 'hidden'; }
+        function closeC() { document.body.classList.remove('contact-open'); document.body.style.overflow = ''; }
+        document.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+            a.addEventListener('click', function (e) { e.preventDefault(); openC(); });
+        });
+        var cc = sec.querySelector('.contact-close');
+        if (cc) cc.addEventListener('click', closeC);
+        sec.addEventListener('click', function (e) { if (e.target === sec) closeC(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && document.body.classList.contains('contact-open')) closeC();
+        });
+    })();
+    </script>
+
+    <script>
+    /* iPhone и iPad: MAX без приложения не открывается — ведём в веб-версию */
+    (function () {
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (!isIOS) return;
+        document.querySelectorAll('a[href^="https://max.ru/u/"]').forEach(function (a) {
+            a.href = a.href.replace('https://max.ru/', 'https://web.max.ru/');
+        });
+    })();
+    </script>
+
+</body></html>
